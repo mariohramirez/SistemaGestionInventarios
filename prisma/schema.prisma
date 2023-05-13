@@ -15,6 +15,11 @@ enum Enum_RoleName {
   USER
 }
 
+enum Enum_MovementType {
+  IN
+  OUT
+}
+
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -66,26 +71,25 @@ model Role {
 }
 
 model Movement {
+  id          String            @id @unique @default(cuid())
+  type        Enum_MovementType
+  createdBy   User              @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  createdById String
+  createdAt   DateTime?         @default(now())
+  updatedAt   DateTime?         @updatedAt
+  material    Material          @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  materialId  String
+}
+
+model Material {
   id          String     @id @unique @default(cuid())
-  materials   Material[]
-  inPrice     Int
-  outPrice    Int
+  name        String     @unique
+  price       Int
+  movements   Movement[]
   createdBy   User       @relation(fields: [createdById], references: [id], onDelete: Cascade)
   createdById String
   createdAt   DateTime?  @default(now())
   updatedAt   DateTime?  @updatedAt
-}
-
-model Material {
-  id          String    @id @unique @default(cuid())
-  name        String    @unique
-  price       Int
-  createdBy   User      @relation(fields: [createdById], references: [id], onDelete: Cascade)
-  createdById String
-  createdAt   DateTime? @default(now())
-  updatedAt   DateTime? @updatedAt
-  movement    Movement  @relation(fields: [movementId], references: [id], onDelete: Cascade)
-  movementId  String
 }
 
 model VerificationToken {
