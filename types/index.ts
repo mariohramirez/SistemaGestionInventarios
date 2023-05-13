@@ -8,7 +8,6 @@ export interface Context {
 }
 
 interface ResolverFunction {
-  // eslint-disable-next-line no-unused-vars
   [key: string]: (parent: any, args: any, context: Context) => Promise<any>;
 }
 
