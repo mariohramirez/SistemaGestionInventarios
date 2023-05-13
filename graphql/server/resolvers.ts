@@ -8,7 +8,8 @@ const resolvers: Resolver = {
   },
   Query: {
     users: async (parent, args, { db }) => await db.user.findMany(),
-    materials: async (parent, { user }, { db }) =>
+    materials: async (parent, args, { db }) => await db.material.findMany(),
+    materialsByUser: async (parent, { user }, { db }) =>
       await db.material.findMany({
         where: {
           createdById: user,

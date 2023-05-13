@@ -25,7 +25,8 @@ const typeDefs = gql`
 
   type Query {
     users: [User]
-    materials(user: ID!): [Material]
+    materials: [Material]
+    materialsByUser(user: ID!): [Material]
   }
 
   type Mutation {
