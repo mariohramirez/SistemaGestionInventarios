@@ -1,5 +1,6 @@
 import { Resolver } from 'types';
 import { DATE_LOCALE, DATE_OPTIONS } from '@config/date';
+import { MATERIALS_QUERY_RESOLVERS } from '@graphql/server/query/materials';
 
 const resolvers: Resolver = {
   Material: {
@@ -7,14 +8,7 @@ const resolvers: Resolver = {
       parent.createdAt.toLocaleDateString(DATE_LOCALE, DATE_OPTIONS),
   },
   Query: {
-    users: async (parent, args, { db }) => await db.user.findMany(),
-    materials: async (parent, args, { db }) => await db.material.findMany(),
-    materialsByUser: async (parent, { user }, { db }) =>
-      await db.material.findMany({
-        where: {
-          createdById: user,
-        },
-      }),
+    ...MATERIALS_QUERY_RESOLVERS,
   },
   Mutation: {
     createMaterial: async (parent, { name, price, user }, { db }) =>
