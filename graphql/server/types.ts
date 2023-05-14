@@ -14,6 +14,7 @@ const typeDefs = gql`
     name: String
     email: String
     image: String
+    role: Role
   }
 
   type Material {
@@ -26,12 +27,12 @@ const typeDefs = gql`
   type Query {
     users: [User]
     materials: [Material]
-    materialsByUser(user: ID!): [Material]
+    materialsByUser: [Material]
   }
 
   type Mutation {
     createUser(name: String!, email: String!, password: String!): User
-    createMaterial(name: String!, price: Int!, user: ID!): Material
+    createMaterial(name: String!, price: Int!): Material
   }
 `;
 
