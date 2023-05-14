@@ -7,7 +7,7 @@ export interface Context {
   res: NextApiResponse;
 }
 
-interface ResolverFunction {
+export interface ResolverFunction {
   [key: string]: (parent: any, args: any, context: Context) => Promise<any>;
 }
 
