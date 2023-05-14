@@ -23,7 +23,7 @@ const serverHandler = init<NextApiRequest, Context>(server, {
 const graphqlServer = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getServerSession(req, res, authOptions);
 
-  if (process.env.NODE_ENV == 'production' && !session) {
+  if (process.env.NODE_ENV === 'production' && !session) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 

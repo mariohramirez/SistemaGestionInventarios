@@ -2,29 +2,56 @@ import { Resolver } from 'types';
 import { DATE_LOCALE, DATE_OPTIONS } from '@config/date';
 
 const resolvers: Resolver = {
+  User: {
+    role: async (parent, args, { db }) =>
+      await db.role.findUnique({
+        where: {
+          id: parent.roleId,
+        },
+      }),
+  },
   Material: {
     createdAt: (parent, args, context) =>
       parent.createdAt.toLocaleDateString(DATE_LOCALE, DATE_OPTIONS),
   },
   Query: {
     users: async (parent, args, { db }) => await db.user.findMany(),
-    materials: async (parent, args, { db }) => await db.material.findMany(),
-    materialsByUser: async (parent, { user }, { db }) =>
-      await db.material.findMany({
+    materials: async (parent, args, { db, session }) => {
+      if (!session) return null;
+
+      return await db.material.findMany();
+    },
+    materialsByUser: async (parent, args, { db, session }) => {
+      if (!session) return null;
+      const email = session?.user?.email ?? '';
+
+      return await db.material.findMany({
         where: {
-          createdById: user,
+          createdBy: {
+            email: email,
+          },
         },
-      }),
+      });
+    },
   },
   Mutation: {
-    createMaterial: async (parent, { name, price, user }, { db }) =>
-      await db.material.create({
+    createMaterial: async (parent, { name, price }, { db, session }) => {
+      if (!session) return null;
+
+      const email = session?.user?.email ?? '';
+
+      return await db.material.create({
         data: {
           name,
           price,
-          createdById: user,
+          createdBy: {
+            connect: {
+              email: email,
+            },
+          },
         },
-      }),
+      });
+    },
   },
 };
 
