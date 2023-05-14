@@ -82,12 +82,13 @@ model Movement {
   id             String       @id @unique @default(cuid())
   createdBy      User         @relation(fields: [createdById], references: [id], onDelete: Cascade)
   createdById    String
+  movementType   MovementType @relation(fields: [movementTypeId], references: [id], onDelete: Cascade)
+  movementTypeId String
+  quantity       Int
   createdAt      DateTime?    @default(now())
   updatedAt      DateTime?    @updatedAt
   material       Material     @relation(fields: [materialId], references: [id], onDelete: Cascade)
   materialId     String
-  movementType   MovementType @relation(fields: [movementTypeId], references: [id], onDelete: Cascade)
-  movementTypeId String
 }
 
 model Material {
