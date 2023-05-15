@@ -1,16 +1,12 @@
-import { signIn, signOut, useSession } from 'next-auth/react';
+import Login from '@components/Login/Login';
+
 
 const Home = () => {
-  const { data: session } = useSession();
-  // eslint-disable-next-line no-console
-  console.log(session);
   return (
     <>
-      <h1>Hello world</h1>
-      <button onClick={() => signIn()}>Iniciar sesión</button>
-      <button type='button' onClick={() => signOut()}>
-        Log out
-      </button>
+      <main>
+        <Login></Login>
+      </main>
     </>
   );
 };
