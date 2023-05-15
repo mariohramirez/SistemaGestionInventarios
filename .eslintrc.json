@@ -37,7 +37,7 @@
     "no-console": "error",
     "no-unused-vars": [
       2,
-      { "args": "after-used", "argsIgnorePattern": "^(parent|args)" }
+      { "args": "after-used", "argsIgnorePattern": "^(parent|args|context)" }
     ],
     "jsx-a11y/anchor-is-valid": [
       "error",

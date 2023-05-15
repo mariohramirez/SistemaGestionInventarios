@@ -1,0 +1,111 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Enum_RoleName {
+  ADMIN
+  USER
+}
+
+enum Enum_MovementType {
+  IN
+  OUT
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String     @id @unique @default(cuid())
+  name          String?
+  email         String?    @unique
+  emailVerified DateTime?
+  image         String?
+  role          Role?      @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  roleId        String?
+  createdAt     DateTime?  @default(now())
+  updatedAt     DateTime?  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+  materials     Material[]
+  movements     Movement[]
+}
+
+model Role {
+  id        String         @id @unique @default(cuid())
+  name      Enum_RoleName?
+  users     User[]
+  createdAt DateTime?      @default(now())
+  updatedAt DateTime?      @updatedAt
+}
+
+model MovementType {
+  id        String             @id @unique @default(cuid())
+  name      Enum_MovementType?
+  movements Movement[]
+  createdAt DateTime?          @default(now())
+  updatedAt DateTime?          @updatedAt
+}
+
+model Movement {
+  id             String       @id @unique @default(cuid())
+  createdBy      User         @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  createdById    String
+  movementType   MovementType @relation(fields: [movementTypeId], references: [id], onDelete: Cascade)
+  movementTypeId String
+  quantity       Int
+  createdAt      DateTime?    @default(now())
+  updatedAt      DateTime?    @updatedAt
+  material       Material     @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  materialId     String
+}
+
+model Material {
+  id          String     @id @unique @default(cuid())
+  name        String     @unique
+  price       Int
+  movements   Movement[]
+  createdBy   User       @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  createdById String
+  createdAt   DateTime?  @default(now())
+  updatedAt   DateTime?  @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
