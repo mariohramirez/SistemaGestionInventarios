@@ -1,13 +1,12 @@
-import Login from '@components/Login/Login';
+import React from 'react'
+import Login from '@components/Login/Login'
 
-
-const Home = () => {
-  return (
-    <>
-      <main>
-        <Login></Login>
-      </main>
-    </>
-  );
-};
-
+export default function Home() {
+    return (
+        <>
+            <main>
+                <Login></Login>
+            </main>
+        </>
+    )
+}
