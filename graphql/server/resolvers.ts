@@ -51,13 +51,15 @@ const resolvers: Resolver = {
       return db.user.delete({ where: { id: args.id } });
     },
     
+    // Actualizar el rol
+    updateUserRole(parent, args, { db }) {      
+      return db.user.update({
+        where: { id: args.id },
+        data: { role: args.role },
+      }); 
+    },  
 
   },
-
-
-
-
-
 
 
 };
