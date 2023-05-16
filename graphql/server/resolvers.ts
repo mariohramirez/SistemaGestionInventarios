@@ -35,6 +35,7 @@ const resolvers: Resolver = {
         },
       });
     },
+    roles: async (parent, args, { db }) => await db.role.findMany(),
   },
   Mutation: {
     createMaterial: async (parent, { name, price }, { db, session }) => {
@@ -72,7 +73,13 @@ const resolvers: Resolver = {
     updateUserRole(parent, args, { db }) {
       return db.user.update({
         where: { id: args.id },
-        data: { role: args.role },
+        data: {
+          role: {
+            connect: {
+              id: args.role,
+            },
+          },
+        },
       });
     },
   },
