@@ -3,6 +3,7 @@ import Image from 'next/image';
 import card from '../public/card.png';
 import Sidebar from './Sidebar';
 import Modal from './ModalMovimiento';
+import TablaInventario from './TablaInventario';
 
 const Inventario = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,13 +45,11 @@ const Inventario = () => {
                             <option key={material.id}>{material.nombre}</option>
                         ))}
                     </select>
-
-
-
                     <button onClick={handleOpenModal} className='bg-[#004737] h-[65px] w-[226px] rounded-xl text-white text-xl font-poppins transition duration-500 ease-in-out shadow-md hover:bg-[#007f5f]'>
                         Agregar movimiento
                     </button>
                 </div>
+                <TablaInventario></TablaInventario>
             </div>
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
