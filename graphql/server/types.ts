@@ -4,16 +4,16 @@ const typeDefs = gql`
   scalar DateTime
 
   enum Role {
-  USER
-  ADMIN
-}
+    USER
+    ADMIN
+  }
 
   type User {
     id: ID
     name: String
     email: String
     image: String
-    role:Role
+    role: Role
   }
 
   type Material {
@@ -26,9 +26,9 @@ const typeDefs = gql`
   type Query {
     users: [User]!
     user(id: ID!): User!
-    user(email:String!): User!
+    user(email: String!): User!
     materials: [Material]
-    materialsByUser(user: ID!): [Material]
+    materialsByUser: [Material]
   }
 
   type Mutation {
@@ -36,7 +36,7 @@ const typeDefs = gql`
     createUser(name: String!, email: String!, password: String!): User
     deleteUser(id: ID!): Boolean
     updateUserRole(id: ID!, role: Role!): User
-    createMaterial(name: String!, price: Int!, user: ID!): Material
+    createMaterial(name: String!, price: Int!): Material
   }
 `;
 
