@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import card from '../public/card.png';
 import Sidebar from './Sidebar';
-import Modal from './ModalMovimiento';
+import ModalMovimiento from './ModalMovimiento';
 import TablaInventario from './TablaInventario';
 
 const Inventario = () => {
@@ -51,7 +51,7 @@ const Inventario = () => {
                 </div>
                 <TablaInventario></TablaInventario>
             </div>
-            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            <ModalMovimiento isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
     );
 };
