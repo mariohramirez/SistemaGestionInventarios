@@ -76,7 +76,7 @@ const resolvers: Resolver = {
         data: {
           role: {
             connect: {
-              id: args.role,
+              name: args.role,
             },
           },
         },

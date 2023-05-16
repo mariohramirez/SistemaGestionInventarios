@@ -3,6 +3,11 @@ import gql from 'graphql-tag';
 const typeDefs = gql`
   scalar DateTime
 
+  enum RoleName {
+    ADMIN
+    USER
+  }
+
   type Role {
     id: ID
     name: String
@@ -36,7 +41,7 @@ const typeDefs = gql`
     updateUser(id: ID!, name: String, email: String): User
     createUser(name: String!, email: String!, password: String!): User
     deleteUser(id: ID!): Boolean
-    updateUserRole(id: ID!, role: ID!): User
+    updateUserRole(id: ID!, role: RoleName!): User
     createMaterial(name: String!, price: Int!): Material
   }
 `;

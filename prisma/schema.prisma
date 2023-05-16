@@ -64,7 +64,7 @@ model User {
 
 model Role {
   id        String         @id @unique @default(cuid())
-  name      Enum_RoleName?
+  name      Enum_RoleName? @unique
   users     User[]
   createdAt DateTime?      @default(now())
   updatedAt DateTime?      @updatedAt
