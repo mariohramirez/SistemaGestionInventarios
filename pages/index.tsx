@@ -1,3 +1,13 @@
-const Home = () => <h1>Hello world</h1>;
+import React from 'react'
+import Login from '@components/Login/Login'
+import Inventario from '@components/Inventario'
 
-export default Home;
+export default function Home() {
+    return (
+        <>
+            <main>
+                <Inventario></Inventario>
+            </main>
+        </>
+    )
+}
