@@ -5,10 +5,10 @@ type ModalProps = {
     isOpen: boolean;
 };
 
-const ModalMovimiento = ({ onClose, isOpen }: ModalProps) => {
+const ModalMaterial = ({ onClose, isOpen }: ModalProps) => {
     const [materialId, setMaterialId] = useState("");
-    const [fecha, setFecha] = useState("");
-    const [tipoMovimiento, setTipoMovimiento] = useState("");
+    const [fechaCreacion, setFechaCreacion] = useState("");
+    const [nombreMaterial, setNombreMaterial] = useState("");
     const [saldo, setSaldo] = useState("");
 
     const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -16,8 +16,8 @@ const ModalMovimiento = ({ onClose, isOpen }: ModalProps) => {
 
         // Procesar los datos del formulario
         console.log('Material ID:', materialId);
-        console.log('Fecha:', fecha);
-        console.log('Tipo de movimiento:', tipoMovimiento);
+        console.log('Fecha de creacion:', fechaCreacion);
+        console.log('Nombre del Material:', nombreMaterial);
         console.log('Saldo:', saldo);
 
         // Cierra el modal
@@ -28,7 +28,7 @@ const ModalMovimiento = ({ onClose, isOpen }: ModalProps) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
             <div className="bg-white p-6 rounded-lg">
                 <h2 className="text-lg font-medium mb-4">
-                    Agregar un nuevo movimiento
+                    Agregar un nuevo material
                 </h2>
                 <form onSubmit={handleFormSubmit}>
 
@@ -46,32 +46,29 @@ const ModalMovimiento = ({ onClose, isOpen }: ModalProps) => {
                     </div>
 
                     <div className="mb-4">
-                        <label htmlFor="fecha" className="block mb-2">
-                            Fecha
+                        <label htmlFor="fechaCreacion" className="block mb-2">
+                            Fecha de creacion
                         </label>
                         <input
                             type="date"
                             id="fecha"
                             className="w-full border-gray-300 rounded-lg p-2"
-                            value={fecha}
-                            onChange={(e) => setFecha(e.target.value)}
+                            value={fechaCreacion}
+                            onChange={(e) => setFechaCreacion(e.target.value)}
                         />
                     </div>
 
                     <div className="mb-4">
-                        <label htmlFor="tipoMovimiento" className="block mb-2">
-                            Tipo de movimiento
+                        <label htmlFor="nombreMaterial" className="block mb-2">
+                            Nombre del material
                         </label>
-                        <select
-                            id="tipoMovimiento"
+                        <input
+                            type="text"
+                            id="nombreMaterial"
                             className="w-full border-gray-300 rounded-lg p-2"
-                            value={tipoMovimiento}
-                            onChange={(e) => setTipoMovimiento(e.target.value)}
-                        >
-                            <option value="">Seleccionar</option>
-                            <option value="entrada">Entrada</option>
-                            <option value="salida">Salida</option>
-                        </select>
+                            value={nombreMaterial}
+                            onChange={(e) => setNombreMaterial(e.target.value)}
+                        />
                     </div>
 
                     <div className="mb-4">
@@ -108,4 +105,4 @@ const ModalMovimiento = ({ onClose, isOpen }: ModalProps) => {
     ) : null;
 };
 
-export default ModalMovimiento;
+export default ModalMaterial;
