@@ -2,6 +2,16 @@ import { Resolver } from 'types';
 import { DATE_LOCALE, DATE_OPTIONS } from '@config/date';
 
 const resolvers: Resolver = {
+
+  User: {
+    rol: async (parent, args, context ) => {
+      return await context.db.role.findUnique({
+        where: {
+          id: parent.rolId,
+        },
+      })
+    }
+  },
   Material: {
     createdAt: (parent, args, context) =>
       parent.createdAt.toLocaleDateString(DATE_LOCALE, DATE_OPTIONS),

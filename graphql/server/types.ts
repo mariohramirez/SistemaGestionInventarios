@@ -14,6 +14,7 @@ const typeDefs = gql`
     name: String
     email: String
     image: String
+    rol:Role
   }
 
   type Material {
@@ -25,6 +26,7 @@ const typeDefs = gql`
 
   type Query {
     users: [User]
+    user(email:String!): User
     materials: [Material]
     materialsByUser(user: ID!): [Material]
   }
