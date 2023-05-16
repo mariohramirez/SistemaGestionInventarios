@@ -33,7 +33,7 @@ const typeDefs = gql`
     users: [User]!
     user(email: String!): User!
     materials: [Material]
-    materialsByUser(user: ID!): [Material]
+    materialsByUser: [Material]
   }
 
   type Mutation {
@@ -41,7 +41,7 @@ const typeDefs = gql`
     createUser(name: String!, email: String!, password: String!): User
     deleteUser(id: ID!): Boolean
     updateUserRole(id: ID!, role: Enum_Role!): User
-    createMaterial(name: String!, price: Int!, user: ID!): Material
+    createMaterial(name: String!, price: Int!): Material
   }
 `;
 

@@ -22,4 +22,15 @@ const GET_MATERIALS_BY_USER = gql`
   }
 `;
 
-export { GET_ALL_MATERIALS, GET_MATERIALS_BY_USER };
+const CREATE_MATERIAL = gql`
+  mutation CreateMaterial($name: String!, $price: Int!) {
+    createMaterial(name: $name, price: $price) {
+      id
+      name
+      price
+      createdAt
+    }
+  }
+`;
+
+export { GET_ALL_MATERIALS, GET_MATERIALS_BY_USER, CREATE_MATERIAL };
