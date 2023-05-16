@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import card from '../public/card.png';
 import Sidebar from './Sidebar';
 import TablaUsuario from './TablaUsuario';
 import ModalUsuario from './ModalUsuario';
