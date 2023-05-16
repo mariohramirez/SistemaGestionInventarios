@@ -3,17 +3,23 @@ import gql from 'graphql-tag';
 const typeDefs = gql`
   scalar DateTime
 
-  enum Role {
-  USER
-  ADMIN
-}
+  enum Enum_Role {
+    ADMIN
+    USER
+  }
+
+  type Role {
+    id: ID
+    name: String
+    users: [User]
+  }
 
   type User {
     id: ID
     name: String
     email: String
     image: String
-    role:Role
+    role: Role
   }
 
   type Material {
@@ -25,8 +31,7 @@ const typeDefs = gql`
 
   type Query {
     users: [User]!
-    user(id: ID!): User!
-    user(email:String!): User!
+    user(email: String!): User!
     materials: [Material]
     materialsByUser(user: ID!): [Material]
   }
@@ -35,7 +40,7 @@ const typeDefs = gql`
     updateUser(id: ID!, name: String, email: String): User
     createUser(name: String!, email: String!, password: String!): User
     deleteUser(id: ID!): Boolean
-    updateUserRole(id: ID!, role: Role!): User
+    updateUserRole(id: ID!, role: Enum_Role!): User
     createMaterial(name: String!, price: Int!, user: ID!): Material
   }
 `;
