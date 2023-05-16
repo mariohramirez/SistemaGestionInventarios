@@ -4,7 +4,7 @@ import { DATE_LOCALE, DATE_OPTIONS } from '@config/date';
 const resolvers: Resolver = {
 
   User: {
-    rol: async (parent, args, context ) => {
+    rol: async (parent, args, context) => {
       return await context.db.role.findUnique({
         where: {
           id: parent.rolId,
@@ -18,6 +18,7 @@ const resolvers: Resolver = {
   },
   Query: {
     users: async (parent, args, { db }) => await db.user.findMany(),
+    user: async (parent, args, { db }) => await db.user.findUnique({ where: { id: args.id }}),
     materials: async (parent, args, { db }) => await db.material.findMany(),
     materialsByUser: async (parent, { user }, { db }) =>
       await db.material.findMany({
@@ -35,7 +36,30 @@ const resolvers: Resolver = {
           createdById: user,
         },
       }),
+    //Crear un nuevo usuario
+    createUser(parent, args, { db }) {
+      return db.user.create({ data: args });
+    },
+
+    // Actualizar un usuario existente
+    updateUser(parent, args, { db }) {
+      return db.user.update({ where: { id: args.id }, data: args });
+    },
+
+    // Eliminar un usuario existente
+    deleteUser(parent, args, { db }) {     
+      return db.user.delete({ where: { id: args.id } });
+    },
+    
+
   },
+
+
+
+
+
+
+
 };
 
 export { resolvers };
