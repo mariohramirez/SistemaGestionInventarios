@@ -3,22 +3,25 @@ import { gql } from '@apollo/client';
 const GET_USERS = gql`
   query Users {
     users {
+      id
       name
       email
-
+      createdAt
+      role {
+        name
+      }
     }
   }
 `;
 
 const GET_USER = gql`
   query User {
-    users(email:$email) {
+    users(email: $email) {
       name
       email
-        rol{
-            name
-        }
-      
+      role {
+        name
+      }
     }
   }
 `;
