@@ -1,30 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import TablaUsuario from './TablaUsuario';
 import ModalUsuario from './ModalUsuario';
 
 const Usuario = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleOpenModal = () => {
-        setIsModalOpen(true);
-    };
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
 
-    return (
-        <div className='bg-[#EAF3D8] h-[1024px] w-[1440px]'>
-            <Sidebar></Sidebar>
-            <div className='pl-[292px] mt-[-930px] w-[1440px] grid justify-items-center'>
-                <div className='w-[460px] text-center text-5xl font-poppins'>Usuarios</div>
-                <div className='pt-[77px] flex space-x-[526px]'>
-                    <button onClick={handleOpenModal} className='bg-[#004737] h-[65px] w-[226px] rounded-xl text-white text-xl font-poppins transition duration-500 ease-in-out shadow-md hover:bg-[#007f5f]'>
-                        Editar usuario
-                    </button>
-                </div>
-                <TablaUsuario></TablaUsuario>
-            </div>
-            <ModalUsuario isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+  return (
+    <div className='h-[1024px] w-[1440px] bg-[#EAF3D8]'>
+      <Sidebar></Sidebar>
+      <div className='mt-[-930px] grid w-[1440px] justify-items-center pl-[292px]'>
+        <div className='w-[460px] text-center font-poppins text-5xl'>
+          Usuarios
         </div>
-    );
+        <div className='flex space-x-[526px] pt-[77px]'>
+          <button
+            onClick={handleOpenModal}
+            className='h-[65px] w-[226px] rounded-xl bg-[#004737] font-poppins text-xl text-white shadow-md transition duration-500 ease-in-out hover:bg-[#007f5f]'
+          >
+            Editar usuario
+          </button>
+        </div>
+        <TablaUsuario></TablaUsuario>
+      </div>
+      <ModalUsuario
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
+    </div>
+  );
 };
 
 export default Usuario;
