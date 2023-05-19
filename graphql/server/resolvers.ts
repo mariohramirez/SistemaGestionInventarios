@@ -15,9 +15,40 @@ const resolvers: Resolver = {
       parent.createdAt.toLocaleDateString(DATE_LOCALE, DATE_OPTIONS),
   },
   Query: {
-    users: async (parent, args, { db }) => await db.user.findMany(),
-    user: async (parent, args, { db }) =>
-      await db.user.findUnique({ where: { id: args.id } }),
+    users: async (parent, args, { db, session }) => {
+      if (!session) return null;
+      const email = session?.user?.email ?? '';
+
+      const user = await db.user.findUnique({
+        where: {
+          email,
+        },
+        include: { role: true },
+      });
+
+      const role = user?.role?.name;
+
+      if (!role || role !== 'ADMIN') return null;
+
+      return await db.user.findMany();
+    },
+    user: async (parent, args, { db, session }) => {
+      if (!session) return null;
+      const email = session?.user?.email ?? '';
+
+      const user = await db.user.findUnique({
+        where: {
+          email,
+        },
+        include: { role: true },
+      });
+
+      const role = user?.role?.name;
+
+      if (!role || role !== 'ADMIN') return null;
+
+      return await db.user.findUnique({ where: { id: args.id } });
+    },
     materials: async (parent, args, { db, session }) => {
       if (!session) return null;
 
@@ -42,6 +73,17 @@ const resolvers: Resolver = {
       if (!session) return null;
       const email = session?.user?.email ?? '';
 
+      const user = await db.user.findUnique({
+        where: {
+          email,
+        },
+        include: { role: true },
+      });
+
+      const role = user?.role?.name;
+
+      if (!role || role !== 'ADMIN') return null;
+
       return await db.material.create({
         data: {
           name,
@@ -54,23 +96,21 @@ const resolvers: Resolver = {
         },
       });
     },
-    //Crear un nuevo usuario
-    createUser(parent, args, { db }) {
-      return db.user.create({ data: args });
-    },
+    updateUserRole: async (parent, args, { db, session }) => {
+      if (!session) return null;
+      const email = session?.user?.email ?? '';
 
-    // Actualizar un usuario existente
-    updateUser(parent, args, { db }) {
-      return db.user.update({ where: { id: args.id }, data: args });
-    },
+      const user = await db.user.findUnique({
+        where: {
+          email,
+        },
+        include: { role: true },
+      });
 
-    // Eliminar un usuario existente
-    deleteUser(parent, args, { db }) {
-      return db.user.delete({ where: { id: args.id } });
-    },
+      const role = user?.role?.name;
 
-    // Actualizar el rol
-    updateUserRole(parent, args, { db }) {
+      if (!role || role !== 'ADMIN') return null;
+
       return db.user.update({
         where: { id: args.id },
         data: {

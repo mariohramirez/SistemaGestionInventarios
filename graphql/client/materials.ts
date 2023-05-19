@@ -12,8 +12,8 @@ const GET_ALL_MATERIALS = gql`
 `;
 
 const GET_MATERIALS_BY_USER = gql`
-  query GetMaterialsByUser($user: ID!) {
-    materialsByUser(user: $user) {
+  query GetMaterialsByUser {
+    materialsByUser {
       id
       name
       price
