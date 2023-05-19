@@ -1,10 +1,11 @@
 import logo from '@public/logo.png';
 import Image from 'next/image';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signIn, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import useUserData from '@hooks/useUserData';
 
 const Login = () => {
-  const { data: session } = useSession();
+  const { session } = useUserData();
   const router = useRouter();
 
   console.log(session);
