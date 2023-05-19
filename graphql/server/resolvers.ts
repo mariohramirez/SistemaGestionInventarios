@@ -32,23 +32,8 @@ const resolvers: Resolver = {
 
       return await db.user.findMany();
     },
-    user: async (parent, args, { db, session }) => {
-      if (!session) return null;
-      const email = session?.user?.email ?? '';
-
-      const user = await db.user.findUnique({
-        where: {
-          email,
-        },
-        include: { role: true },
-      });
-
-      const role = user?.role?.name;
-
-      if (!role || role !== 'ADMIN') return null;
-
-      return await db.user.findUnique({ where: { id: args.id } });
-    },
+    user: async (parent, { email }, { db }) =>
+      await db.user.findFirst({ where: { email } }),
     materials: async (parent, args, { db, session }) => {
       if (!session) return null;
 
