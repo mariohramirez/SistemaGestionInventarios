@@ -14,7 +14,7 @@ const Usuario = () => {
   return (
     <PrivateRoute role='ADMIN'>
       <Layout>
-        <div className='mt-[-930px] grid w-[1440px] justify-items-center pl-[292px]'>
+        <>
           <div className='w-[460px] text-center font-poppins text-5xl'>
             Usuarios
           </div>
@@ -27,7 +27,7 @@ const Usuario = () => {
             </button>
           </div>
           <TablaUsuario></TablaUsuario>
-        </div>
+        </>
         <ModalUsuario
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}

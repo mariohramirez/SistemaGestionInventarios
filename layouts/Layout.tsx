@@ -5,9 +5,11 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => (
-  <div className='h-[1024px] w-[1440px] bg-[#EAF3D8]'>
+  <div className='flex h-full w-full bg-[#EAF3D8]'>
     <Sidebar />
-    <>{children}</>
+    <div className='mt-10 grid h-full w-[1440px] justify-items-center pl-[292px]'>
+      {children}
+    </div>
   </div>
 );
 
