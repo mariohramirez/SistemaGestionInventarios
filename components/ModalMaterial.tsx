@@ -1,3 +1,5 @@
+import { useMutation } from '@apollo/client';
+import { CREATE_MATERIAL } from '@graphql/client/materials';
 import { useState } from 'react';
 
 type ModalProps = {
@@ -5,22 +7,30 @@ type ModalProps = {
   isOpen: boolean;
 };
 
+interface FormData {
+  name: string;
+  price: number;
+}
+
 const ModalMaterial = ({ onClose, isOpen }: ModalProps) => {
-  const [materialId, setMaterialId] = useState('');
-  const [fechaCreacion, setFechaCreacion] = useState('');
-  const [nombreMaterial, setNombreMaterial] = useState('');
-  const [saldo, setSaldo] = useState('');
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    price: 0,
+  });
 
-  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [createMaterial] = useMutation(CREATE_MATERIAL);
+
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    // Procesar los datos del formulario
-    console.log('Material ID:', materialId);
-    console.log('Fecha de creacion:', fechaCreacion);
-    console.log('Nombre del Material:', nombreMaterial);
-    console.log('Saldo:', saldo);
-
-    // Cierra el modal
+    try {
+      const { data } = await createMaterial({
+        variables: {
+          ...formData,
+        },
+      });
+    } catch (e) {
+      console.error(e);
+    }
     onClose();
   };
 
@@ -30,54 +40,40 @@ const ModalMaterial = ({ onClose, isOpen }: ModalProps) => {
         <h2 className='mb-4 text-lg font-medium'>Agregar un nuevo material</h2>
         <form onSubmit={handleFormSubmit}>
           <div className='mb-4'>
-            <label htmlFor='materialId' className='mb-2 block'>
-              Identificador del material
-            </label>
-            <input
-              type='text'
-              id='materialId'
-              className='w-full rounded-lg border-gray-300 p-2'
-              value={materialId}
-              onChange={(e) => setMaterialId(e.target.value)}
-            />
-          </div>
-
-          <div className='mb-4'>
-            <label htmlFor='fechaCreacion' className='mb-2 block'>
-              Fecha de creacion
-            </label>
-            <input
-              type='date'
-              id='fecha'
-              className='w-full rounded-lg border-gray-300 p-2'
-              value={fechaCreacion}
-              onChange={(e) => setFechaCreacion(e.target.value)}
-            />
-          </div>
-
-          <div className='mb-4'>
-            <label htmlFor='nombreMaterial' className='mb-2 block'>
+            <label htmlFor='name' className='mb-2 block'>
               Nombre del material
             </label>
             <input
               type='text'
-              id='nombreMaterial'
+              name='name'
+              id='name'
               className='w-full rounded-lg border-gray-300 p-2'
-              value={nombreMaterial}
-              onChange={(e) => setNombreMaterial(e.target.value)}
+              value={formData.name}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  name: e.target.value,
+                }))
+              }
             />
           </div>
-
           <div className='mb-4'>
-            <label htmlFor='saldo' className='mb-2 block'>
+            <label htmlFor='price' className='mb-2 block'>
               Saldo
             </label>
             <input
               type='number'
-              id='saldo'
+              name='price'
+              id='price'
+              min={0}
               className='w-full rounded-lg border-gray-300 p-2'
-              value={saldo}
-              onChange={(e) => setSaldo(e.target.value)}
+              value={formData.price.toString()}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  price: parseInt(e.target.value),
+                }))
+              }
             />
           </div>
           <div className='flex items-center justify-end'>

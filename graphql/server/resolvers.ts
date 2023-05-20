@@ -49,6 +49,7 @@ const resolvers: Resolver = {
             email,
           },
         },
+        orderBy: [{ createdAt: 'desc' }],
       });
     },
     roles: async (parent, args, { db }) => await db.role.findMany(),
