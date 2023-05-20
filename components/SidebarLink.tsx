@@ -25,7 +25,7 @@ const SidebarLink = ({ href, imageActive, image, title }: SidebarLinkProps) => {
             alt='Inventario'
             className='ml-[-60px] mr-[10px]'
           />
-          <span>{title}</span>
+          <span className='pl-1'>{title}</span>
         </div>
       </Link>
     </>

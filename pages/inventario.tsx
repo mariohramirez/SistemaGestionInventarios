@@ -25,10 +25,8 @@ const Inventario = () => {
     <PrivateRoute>
       <Layout>
         <>
-          <div className='w-[460px] text-center font-poppins text-5xl'>
-            Inventarios
-          </div>
-          <div className='flex space-x-[526px] pt-[50px]'>
+          <div className='text-center font-poppins text-5xl'>Inventarios</div>
+          <div className='flex w-full justify-between pt-[50px]'>
             <select className='h-16 w-64 rounded-lg border-2 border-black bg-green-200 font-poppins text-xl hover:bg-green-300 focus:border-green-500 focus:outline-none'>
               <option>Selecciona un material</option>
               {materiales.map((material) => (

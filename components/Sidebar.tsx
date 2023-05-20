@@ -9,7 +9,7 @@ import { PrivateComponent } from '@components/PrivateComponent';
 import { SidebarLink } from '@components/SidebarLink';
 
 const Sidebar = () => (
-  <div className='sticky bottom-0 top-0 h-screen w-[292px] bg-[#004737]'>
+  <div className='sticky bottom-0 left-0 top-0 h-screen w-[292px] bg-[#004737]'>
     <div className='grid w-[292px] justify-items-center'>
       <Image src={picture} alt='Picture' className='pt-[49px]' />
       <div className='pt-[18px] font-poppins text-xl text-white'>
