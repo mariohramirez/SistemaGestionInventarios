@@ -81,4 +81,4 @@ const ModalUsuario = ({ onClose, isOpen }: ModalProps) => {
   ) : null;
 };
 
-export default ModalUsuario;
+export { ModalUsuario };

@@ -106,4 +106,4 @@ const ModalMovimiento = ({ onClose, isOpen }: ModalProps) => {
   ) : null;
 };
 
-export default ModalMovimiento;
+export { ModalMovimiento };

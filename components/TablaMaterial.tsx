@@ -1,5 +1,3 @@
-import React from 'react';
-
 const TablaMaterial = () => (
   <div className='pt-[42px]'>
     <table className=' table-auto border-2 border-black'>
@@ -41,4 +39,4 @@ const TablaMaterial = () => (
   </div>
 );
 
-export default TablaMaterial;
+export { TablaMaterial };
