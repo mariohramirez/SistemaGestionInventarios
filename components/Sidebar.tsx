@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from 'next/image';
 import picture from '@public/picture.png';
 import logo from '@public/logo.png';
@@ -6,6 +5,7 @@ import inventario2 from '@public/inventario2.png';
 import cart from '@public/cart.png';
 import user from '@public/user.png';
 import { useRouter } from 'next/router';
+import { PrivateComponent } from './PrivateComponent';
 
 const Sidebar = () => {
   const router = useRouter();
@@ -54,15 +54,17 @@ const Sidebar = () => {
           </div>
         </button>
         <div className='pt-[65px]'></div>
-        <button
-          className='h-[65px] w-[226px] transform rounded-xl font-poppins text-xl text-white transition duration-300 ease-in-out hover:scale-105 hover:bg-[#5EFEA9]'
-          onClick={handleUsuarioClick}
-        >
-          <div className='flex justify-center'>
-            <Image src={user} alt='user' className='ml-[-60px] mr-[10px]' />
-            Usuarios
-          </div>
-        </button>
+        <PrivateComponent role='ADMIN'>
+          <button
+            className='h-[65px] w-[226px] transform rounded-xl font-poppins text-xl text-white transition duration-300 ease-in-out hover:scale-105 hover:bg-[#5EFEA9]'
+            onClick={handleUsuarioClick}
+          >
+            <div className='flex justify-center'>
+              <Image src={user} alt='user' className='ml-[-60px] mr-[10px]' />
+              Usuarios
+            </div>
+          </button>
+        </PrivateComponent>
         <Image
           src={logo}
           alt='Logo'
@@ -73,4 +75,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export { Sidebar };

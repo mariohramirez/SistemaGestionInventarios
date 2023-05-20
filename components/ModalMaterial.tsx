@@ -101,4 +101,4 @@ const ModalMaterial = ({ onClose, isOpen }: ModalProps) => {
   ) : null;
 };
 
-export default ModalMaterial;
+export { ModalMaterial };

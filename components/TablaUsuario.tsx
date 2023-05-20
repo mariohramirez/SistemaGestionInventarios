@@ -1,5 +1,3 @@
-import React from 'react';
-
 const TablaUsuario = () => (
   <div className='pt-[42px]'>
     <table className=' table-auto border-2 border-black'>
@@ -41,4 +39,4 @@ const TablaUsuario = () => (
   </div>
 );
 
-export default TablaUsuario;
+export { TablaUsuario };

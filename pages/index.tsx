@@ -1,14 +1,24 @@
-import Login from '@components/Login/Login';
-import Inventario from '@components/Inventario';
-import Material from '@components/Material';
-import Usuario from '@components/Usuario';
+import useUserData from '@hooks/useUserData';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
-const Home = () => (
-  <>
-    <main>
-      <Login />
-    </main>
-  </>
-);
+const Home = () => {
+  const { session, loading } = useUserData();
+  const router = useRouter();
+
+  if (loading) return <div>Loading...</div>;
+
+  if (!session) {
+    router.push('/login');
+  }
+
+  return (
+    <>
+      <Link href='/inventario'>
+        <button>Ir a la app</button>
+      </Link>
+    </>
+  );
+};
 
 export default Home;
