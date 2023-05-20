@@ -15,8 +15,8 @@ const GET_USERS = gql`
 `;
 
 const GET_USER = gql`
-  query User {
-    users(email: $email) {
+  query User($email: String!) {
+    user(email: $email) {
       name
       email
       role {

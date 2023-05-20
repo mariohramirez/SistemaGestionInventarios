@@ -24,11 +24,9 @@ const Inventario = () => {
   return (
     <PrivateRoute>
       <Layout>
-        <div className='mt-[-930px] grid w-[1440px] justify-items-center pl-[292px]'>
-          <div className='w-[460px] text-center font-poppins text-5xl'>
-            Inventarios
-          </div>
-          <div className='flex space-x-[526px] pt-[77px]'>
+        <>
+          <div className='text-center font-poppins text-5xl'>Inventarios</div>
+          <div className='flex w-full justify-between pt-[50px]'>
             <select className='h-16 w-64 rounded-lg border-2 border-black bg-green-200 font-poppins text-xl hover:bg-green-300 focus:border-green-500 focus:outline-none'>
               <option>Selecciona un material</option>
               {materiales.map((material) => (
@@ -43,7 +41,7 @@ const Inventario = () => {
             </button>
           </div>
           <TablaInventario></TablaInventario>
-        </div>
+        </>
         <ModalMovimiento
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
