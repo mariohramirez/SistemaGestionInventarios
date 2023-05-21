@@ -17,7 +17,10 @@ const PrivateRoute = ({ role, children }: PrivateRouteProps) => {
       <div className='flex h-screen w-full flex-col items-center justify-center gap-5'>
         <h1 className='text-6xl'>Esta ruta require autenticación.</h1>
         <h2 className='text-2xl'>Por favor inicia sesión</h2>
-        <Link href='/login' className='text-2xl text-[#004737]'>
+        <Link
+          href='/login'
+          className='flex h-12 w-32 items-center justify-center rounded-lg bg-[#004737] text-center text-2xl text-white'
+        >
           Iniciar sesión
         </Link>
       </div>
@@ -28,7 +31,10 @@ const PrivateRoute = ({ role, children }: PrivateRouteProps) => {
     return (
       <div className='flex h-screen w-full flex-col items-center justify-center gap-5'>
         <h1 className='text-6xl'>No tienes permiso para ir a esta ruta.</h1>
-        <Link href='/inventarios' className='text-2xl text-[#004737]'>
+        <Link
+          href='/inventario'
+          className='flex h-12 w-32 items-center justify-center rounded-lg bg-[#004737] text-center text-2xl text-white'
+        >
           Ir a Inventarios
         </Link>
       </div>

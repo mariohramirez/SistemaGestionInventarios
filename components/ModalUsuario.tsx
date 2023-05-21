@@ -56,7 +56,7 @@ const ModalUsuario = ({ onClose, isOpen }: ModalProps) => {
             </label>
             <select
               id='usuario'
-              className='w-full rounded-lg border-gray-300 p-2'
+              className='w-full rounded-lg border border-gray-300 p-2 outline-none'
               value={formData.userId}
               onChange={(e) =>
                 setFormData((prev) => ({
@@ -80,7 +80,7 @@ const ModalUsuario = ({ onClose, isOpen }: ModalProps) => {
             </label>
             <select
               id='rol'
-              className='w-full rounded-lg border-gray-300 p-2'
+              className='w-full rounded-lg border border-gray-300 p-2 outline-none'
               value={formData.newRole}
               onChange={(e) =>
                 setFormData((prev) => ({
