@@ -47,7 +47,7 @@ const ModalMaterial = ({ onClose, isOpen }: ModalProps) => {
               type='text'
               name='name'
               id='name'
-              className='w-full rounded-lg border-gray-300 p-2'
+              className='w-full rounded-lg border border-gray-300 p-2 outline-none '
               value={formData.name}
               onChange={(e) =>
                 setFormData((prev) => ({
@@ -66,7 +66,7 @@ const ModalMaterial = ({ onClose, isOpen }: ModalProps) => {
               name='price'
               id='price'
               min={0}
-              className='w-full rounded-lg border-gray-300 p-2'
+              className='w-full rounded-lg border border-gray-300 p-2 outline-none'
               value={formData.price.toString()}
               onChange={(e) =>
                 setFormData((prev) => ({

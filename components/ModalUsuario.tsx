@@ -1,22 +1,47 @@
+import { useMutation, useQuery } from '@apollo/client';
+import { GET_USERS, UPDATE_USER_ROLE } from '@graphql/client/users';
+import { Enum_RoleName } from '@prisma/client';
 import { useState } from 'react';
+import { UserWithRole } from 'types';
 
 type ModalProps = {
   onClose: () => void;
   isOpen: boolean;
 };
 
+interface FormData {
+  userId: string;
+  newRole: string;
+}
+
 const ModalUsuario = ({ onClose, isOpen }: ModalProps) => {
-  const [usuario, setUsuario] = useState('');
-  const [rol, setRol] = useState('');
+  const [formData, setFormData] = useState<FormData>({
+    userId: '',
+    newRole: '',
+  });
 
-  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const { data } = useQuery<{
+    users: UserWithRole[];
+  }>(GET_USERS, {
+    fetchPolicy: 'cache-first',
+  });
+
+  const [updateUserRole] = useMutation(UPDATE_USER_ROLE);
+
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    try {
+      await updateUserRole({
+        variables: {
+          userId: formData.userId,
+          role: formData.newRole,
+        },
+      });
+      setFormData({ userId: '', newRole: '' });
+    } catch (e) {
+      console.error(e);
+    }
 
-    // Procesar los datos del formulario
-    console.log('Usuario:', usuario);
-    console.log('Rol:', rol);
-
-    // Cierra el modal
     onClose();
   };
 
@@ -31,16 +56,21 @@ const ModalUsuario = ({ onClose, isOpen }: ModalProps) => {
             </label>
             <select
               id='usuario'
-              className='w-full rounded-lg border-gray-300 p-2'
-              value={usuario}
-              onChange={(e) => setUsuario(e.target.value)}
+              className='w-full rounded-lg border border-gray-300 p-2 outline-none'
+              value={formData.userId}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  userId: e.target.value,
+                }))
+              }
             >
               <option value=''>Seleccionar</option>
-              <option value='Usuario 1'>Usuario 1</option>
-              <option value='Usuario 2'>Usuario 2</option>
-              <option value='Usuario 3'>Usuario 3</option>
-              <option value='Usuario 4'>Usuario 4</option>
-              <option value='Usuario 5'>Usuario 5</option>
+              {data?.users.map((user) => (
+                <option key={user.id} value={user.id}>
+                  {user.name}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -50,13 +80,21 @@ const ModalUsuario = ({ onClose, isOpen }: ModalProps) => {
             </label>
             <select
               id='rol'
-              className='w-full rounded-lg border-gray-300 p-2'
-              value={rol}
-              onChange={(e) => setRol(e.target.value)}
+              className='w-full rounded-lg border border-gray-300 p-2 outline-none'
+              value={formData.newRole}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  newRole: e.target.value,
+                }))
+              }
             >
               <option value=''>Seleccionar</option>
-              <option value='ADMIN'>ADMIN</option>
-              <option value='USER'>USER</option>
+              {Object.values(Enum_RoleName).map((role) => (
+                <option key={role} value={role}>
+                  {role}
+                </option>
+              ))}
             </select>
           </div>
 

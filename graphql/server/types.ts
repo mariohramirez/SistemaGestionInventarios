@@ -20,6 +20,7 @@ const typeDefs = gql`
     email: String
     image: String
     role: Role
+    createdAt: DateTime
   }
 
   type Material {
