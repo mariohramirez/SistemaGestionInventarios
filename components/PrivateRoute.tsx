@@ -19,7 +19,7 @@ const PrivateRoute = ({ role, children }: PrivateRouteProps) => {
         <h2 className='text-2xl'>Por favor inicia sesión</h2>
         <Link
           href='/login'
-          className='flex h-12 w-32 items-center justify-center rounded-lg bg-[#004737] text-center text-2xl text-white'
+          className='flex h-12 w-48 items-center justify-center rounded-lg bg-[#004737] text-center text-2xl text-white'
         >
           Iniciar sesión
         </Link>
