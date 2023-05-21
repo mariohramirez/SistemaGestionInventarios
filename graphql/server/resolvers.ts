@@ -100,7 +100,6 @@ const resolvers: Resolver = {
       const role = user?.role?.name;
 
       if (!role || role !== 'ADMIN') return null;
-      console.log(role, args);
 
       return db.user.update({
         where: { id: args.id },

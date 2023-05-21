@@ -1,4 +1,4 @@
-import logo from '@public/logo.png';
+import logo from '@public/png/logo.png';
 import Image from 'next/image';
 import { signIn, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -8,7 +8,9 @@ const Login = () => {
   const { session } = useUserData();
   const router = useRouter();
 
-  console.log(session);
+  if (session) {
+    router.push('/');
+  }
 
   return (
     <div className='flex flex-row'>
@@ -28,12 +30,12 @@ const Login = () => {
           Iniciar Sesión
         </button>
         <div className='pt-6'></div>
-        <button
+        {/* <button
           className='h-[65px] w-[460px] rounded-xl bg-[#004737] font-poppins text-xl text-white transition-all duration-300 ease-in-out hover:bg-gray-800 hover:text-white'
           onClick={() => signOut()}
         >
           Cerrar Sesión
-        </button>
+        </button> */}
       </div>
     </div>
   );
