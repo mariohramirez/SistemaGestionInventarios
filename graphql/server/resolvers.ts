@@ -9,6 +9,8 @@ const resolvers: Resolver = {
           id: parent.roleId,
         },
       }),
+    createdAt: (parent, args, context) =>
+      parent.createdAt.toLocaleDateString(DATE_LOCALE, DATE_OPTIONS),
   },
   Material: {
     createdAt: (parent, args, context) =>
@@ -30,7 +32,9 @@ const resolvers: Resolver = {
 
       if (!role || role !== 'ADMIN') return null;
 
-      return await db.user.findMany();
+      return await db.user.findMany({
+        orderBy: [{ createdAt: 'desc' }],
+      });
     },
     user: async (parent, { email }, { db }) =>
       await db.user.findFirst({ where: { email } }),
@@ -96,6 +100,7 @@ const resolvers: Resolver = {
       const role = user?.role?.name;
 
       if (!role || role !== 'ADMIN') return null;
+      console.log(role, args);
 
       return db.user.update({
         where: { id: args.id },
