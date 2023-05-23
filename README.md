@@ -1,3 +1,5 @@
+![Diagrama ER](https://github.com/mariohramirez/SistemaGestionInventarios/assets/57969717/4edcc411-2bc8-483b-bbe7-0738759e7189)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
