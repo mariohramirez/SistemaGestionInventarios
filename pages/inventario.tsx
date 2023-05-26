@@ -11,6 +11,7 @@ import { GET_MOVEMENTS_BY_MATERIAL } from '@graphql/client/movements';
 import { MovementWithMovementType } from 'types';
 
 import { LayoutContext } from 'contexts/LayoutContext';
+import { MuiSelect } from '@components/material/MuiSelect';
 
 export default function Inventario() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -72,6 +73,7 @@ export default function Inventario() {
 
             {/* ACTION BUTTONS */}
             <div className='flex flex-wrap w-full justify-center gap-4'>
+              
               <select
                 value={material}
                 onChange={handleSelectMaterial}
@@ -86,6 +88,14 @@ export default function Inventario() {
                   </option>
                 ))}
               </select>
+
+              <MuiSelect
+                placeholder='Selecciona un material'
+                // selectOptions={[materials?.materialsByUser]}
+                selectOptions={[{ name: "Material 1" }, { name: "Material KL 2" }] as Material[]}
+                displayFn={(i: Material) => i.name}
+                onValueChange={(e) => { console.log("Option changed --> ", e) }}
+              />
 
               <button
                 onClick={handleOpenModal}
