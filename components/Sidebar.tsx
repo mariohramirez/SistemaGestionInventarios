@@ -9,7 +9,9 @@ import inventario from '@public/png/inventario.png';
 import inventario2 from '@public/png/inventario2.png';
 import cart from '@public/png/cart.png';
 
-const Sidebar = () => {
+
+export function Sidebar(props: any) {
+
   const handleLogout = () => {
     signOut({ callbackUrl: 'http://localhost:3000/login' });
   };
@@ -17,14 +19,19 @@ const Sidebar = () => {
   return (
     <div className='sticky bottom-0 left-0 top-0 h-screen w-[292px] bg-[#004737]'>
       <div className='flex h-full w-[292px] flex-col items-center justify-between'>
+
+        {/* AVATAR SECTION */}
         <div className='grid justify-items-center'>
           <Image src={picture} alt='Picture' className='pt-[49px]' />
           <div className='pt-[18px] font-poppins text-xl text-white'>
             Ava Williams
           </div>
         </div>
-        <div className='mt-10 flex h-full flex-col items-center justify-between pb-5'>
-          <div className='flex flex-col gap-4'>
+
+        <div className='flex h-full flex-col justify-between py-5'>
+
+          {/* ACTION BUTTONS */}
+          <div className='flex flex-col w-full gap-4 px-3'>
             <SidebarLink
               title='Inventarios'
               href='/inventario'
@@ -46,6 +53,8 @@ const Sidebar = () => {
               />
             </PrivateComponent>
           </div>
+
+          {/* COMPANY LOGO */}
           <div className='flex flex-col items-center justify-center gap-5'>
             <button
               className='flex items-center justify-center gap-1'
@@ -71,9 +80,9 @@ const Sidebar = () => {
             </button>
             <Image src={logo} alt='Logo' className='pl-[47px] pr-[47px]' />
           </div>
+
         </div>
       </div>
     </div>
   );
 };
-export { Sidebar };

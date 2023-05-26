@@ -1,6 +1,8 @@
+import { LayoutContext } from 'contexts/LayoutContext';
 import Image, { StaticImageData } from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useContext } from 'react';
 
 interface SidebarLinkProps {
   href: string;
@@ -9,15 +11,17 @@ interface SidebarLinkProps {
   imageActive: StaticImageData;
 }
 
-const SidebarLink = ({ href, imageActive, image, title }: SidebarLinkProps) => {
+export function SidebarLink({ href, imageActive, image, title }: SidebarLinkProps){
+
   const { pathname } = useRouter();
+  const { setShowLeftMenu } = useContext(LayoutContext);
+
   return (
     <>
       <Link
-        className={`flex h-[65px] w-[226px] transform rounded-xl ${
-          pathname === href ? 'bg-[#5EFEA9]' : 'text-white'
-        } font-poppins text-xl transition duration-300 ease-in-out hover:scale-105 hover:bg-green-500`}
+        className={`flex w-full h-14 transform rounded-xl ${pathname === href  ? 'bg-[#5EFEA9]' : 'text-white'} font-poppins text-xl transition duration-300 ease-in-out hover:scale-105 hover:bg-green-500`}
         href={href}
+        onClick={() => setShowLeftMenu(false)}
       >
         <div className='m-auto flex max-h-[31px] w-full justify-center'>
           <Image
@@ -31,4 +35,3 @@ const SidebarLink = ({ href, imageActive, image, title }: SidebarLinkProps) => {
     </>
   );
 };
-export { SidebarLink };
