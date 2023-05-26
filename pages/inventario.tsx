@@ -96,8 +96,8 @@ const Inventario = () => {
                 // selectOptions={[materials?.materialsByUser]}
                 selectOptions={
                   [
-                    { name: 'Material 1' },
-                    { name: 'Material KL 2' },
+                    { name: 'Material 1', id: '1' },
+                    { name: 'Material KL 2', id: '2' },
                   ] as Material[]
                 }
                 displayFn={(i: Material) => i.name}

@@ -9,40 +9,44 @@ interface LayoutProps {
   children: JSX.Element | JSX.Element[];
 }
 
-export function Layout({ children }: LayoutProps) {
-
+const Layout = ({ children }: LayoutProps) => {
   const { setShowLeftMenu, showLeftMenu } = useContext(LayoutContext);
-   
-  return <>
-    <div className='flex h-screen w-full bg-[#EAF3D8] items-start'>
 
-      <Drawer className='block md:hidden'
-        anchor={'left'}
-        open={showLeftMenu}
-        onClose={() => setShowLeftMenu(false)}        
-      >
-        <Sidebar/>
-      </Drawer>
+  return (
+    <>
+      <div className='flex h-screen w-full items-start bg-[#EAF3D8]'>
+        <Drawer
+          className='block md:hidden'
+          anchor={'left'}
+          open={showLeftMenu}
+          onClose={() => setShowLeftMenu(false)}
+        >
+          <Sidebar />
+        </Drawer>
 
-      <div className='hidden md:block'>
-        <Sidebar/>
-      </div>
-
-      <div className='flex flex-col h-full w-full'>
-
-        {/* PHONE'S HEADER */}
-        <div className='block md:hidden w-full items-center justify-start px-2'>
-          <IconButton color="primary" aria-label="add to shopping cart" onClick={() => setShowLeftMenu(true)}>
-            <MenuIcon />
-          </IconButton>
+        <div className='hidden md:block'>
+          <Sidebar />
         </div>
 
-        <div className='max-w-3/4 flex flex-col items-center'>{children}</div>
+        <div className='flex h-full w-full flex-col'>
+          {/* PHONE'S HEADER */}
+          <div className='block w-full items-center justify-start px-2 md:hidden'>
+            <IconButton
+              color='primary'
+              aria-label='add to shopping cart'
+              onClick={() => setShowLeftMenu(true)}
+            >
+              <MenuIcon />
+            </IconButton>
+          </div>
 
+          <div className='max-w-3/4 flex flex-col items-center overflow-y-scroll pb-10'>
+            {children}
+          </div>
+        </div>
       </div>
-
-    </div>
-  </>
-
+    </>
+  );
 };
 
+export { Layout };

@@ -10,23 +10,26 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-
-
-export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
-
+const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
   const [showMenu, setShowMenu] = useState(false);
 
-  function updateShowMenu(showMenu: boolean) {    
+  function updateShowMenu(showMenu: boolean) {
     setShowMenu(showMenu);
-  };
+  }
 
-  return <>
-    <SessionProvider session={session}>
-      <ApolloProvider client={client}>
-        <LayoutContext.Provider value={{ showLeftMenu: showMenu, setShowLeftMenu: updateShowMenu }}>
-          <Component {...pageProps} />
-        </LayoutContext.Provider>
-      </ApolloProvider>
-    </SessionProvider>
-  </>
+  return (
+    <>
+      <SessionProvider session={session}>
+        <ApolloProvider client={client}>
+          <LayoutContext.Provider
+            value={{ showLeftMenu: showMenu, setShowLeftMenu: updateShowMenu }}
+          >
+            <Component {...pageProps} />
+          </LayoutContext.Provider>
+        </ApolloProvider>
+      </SessionProvider>
+    </>
+  );
 };
+
+export default App;
