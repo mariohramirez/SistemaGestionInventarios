@@ -1,3 +1,7 @@
+import { useMutation, useQuery } from '@apollo/client';
+import { GET_MATERIALS_BY_USER } from '@graphql/client/materials';
+import { CREATE_MOVEMENT } from '@graphql/client/movements';
+import { Enum_MovementType, Material } from '@prisma/client';
 import { useState } from 'react';
 
 type ModalProps = {
@@ -5,22 +9,41 @@ type ModalProps = {
   isOpen: boolean;
 };
 
+interface FormData {
+  materialId: string;
+  quantity: number;
+  movementType: string;
+}
+
 const ModalMovimiento = ({ onClose, isOpen }: ModalProps) => {
-  const [materialId, setMaterialId] = useState('');
-  const [fecha, setFecha] = useState('');
-  const [tipoMovimiento, setTipoMovimiento] = useState('');
-  const [saldo, setSaldo] = useState('');
+  const { data } = useQuery<{
+    materialsByUser: Material[];
+  }>(GET_MATERIALS_BY_USER, {
+    fetchPolicy: 'cache-first',
+  });
 
-  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [formData, setFormData] = useState<FormData>({
+    materialId: '',
+    quantity: 0,
+    movementType: 'IN',
+  });
+
+  const [createMovement] = useMutation(CREATE_MOVEMENT);
+
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    // Procesar los datos del formulario
-    console.log('Material ID:', materialId);
-    console.log('Fecha:', fecha);
-    console.log('Tipo de movimiento:', tipoMovimiento);
-    console.log('Saldo:', saldo);
-
-    // Cierra el modal
+    try {
+      await createMovement({
+        variables: {
+          materialId: formData.materialId,
+          quantity: formData.quantity,
+          type: formData.movementType,
+        },
+      });
+      setFormData({ materialId: '', quantity: 0, movementType: 'IN' });
+    } catch (e) {
+      console.error(e);
+    }
     onClose();
   };
 
@@ -32,29 +55,25 @@ const ModalMovimiento = ({ onClose, isOpen }: ModalProps) => {
         </h2>
         <form onSubmit={handleFormSubmit}>
           <div className='mb-4'>
-            <label htmlFor='materialId' className='mb-2 block'>
-              Identificador del material
-            </label>
-            <input
-              type='text'
-              id='materialId'
-              className='w-full rounded-lg border-gray-300 p-2'
-              value={materialId}
-              onChange={(e) => setMaterialId(e.target.value)}
-            />
-          </div>
-
-          <div className='mb-4'>
-            <label htmlFor='fecha' className='mb-2 block'>
-              Fecha
-            </label>
-            <input
-              type='date'
-              id='fecha'
-              className='w-full rounded-lg border-gray-300 p-2'
-              value={fecha}
-              onChange={(e) => setFecha(e.target.value)}
-            />
+            <select
+              className='w-full rounded-lg border border-gray-300 p-2 outline-none'
+              value={formData.materialId}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  materialId: e.target.value,
+                }))
+              }
+            >
+              <option value='' disabled>
+                Selecciona un material
+              </option>
+              {data?.materialsByUser?.map((material) => (
+                <option key={material.id} value={material.id}>
+                  {material.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className='mb-4'>
@@ -62,14 +81,20 @@ const ModalMovimiento = ({ onClose, isOpen }: ModalProps) => {
               Tipo de movimiento
             </label>
             <select
-              id='tipoMovimiento'
               className='w-full rounded-lg border-gray-300 p-2'
-              value={tipoMovimiento}
-              onChange={(e) => setTipoMovimiento(e.target.value)}
+              value={formData.movementType}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  movementType: e.target.value,
+                }))
+              }
             >
-              <option value=''>Seleccionar</option>
-              <option value='entrada'>Entrada</option>
-              <option value='salida'>Salida</option>
+              {Object.values(Enum_MovementType).map((type) => (
+                <option key={type} value={type}>
+                  {type === 'IN' ? 'Entrada' : 'Salida'}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -79,10 +104,15 @@ const ModalMovimiento = ({ onClose, isOpen }: ModalProps) => {
             </label>
             <input
               type='number'
-              id='saldo'
               className='w-full rounded-lg border-gray-300 p-2'
-              value={saldo}
-              onChange={(e) => setSaldo(e.target.value)}
+              value={formData.quantity}
+              min={1}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  quantity: e.target.value ? parseInt(e.target.value) : 0,
+                }))
+              }
             />
           </div>
           <div className='flex items-center justify-end'>
