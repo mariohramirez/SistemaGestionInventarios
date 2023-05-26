@@ -4,23 +4,52 @@ import { TablaInventario } from '@components/TablaInventario';
 import { PrivateRoute } from '@components/PrivateRoute';
 import { Layout } from '@layouts/Layout';
 import Head from 'next/head';
+import { Material } from '@prisma/client';
+import { GET_MATERIALS_BY_USER } from '@graphql/client/materials';
+import { useQuery } from '@apollo/client';
+import { GET_MOVEMENTS_BY_MATERIAL } from '@graphql/client/movements';
+import { MovementWithMovementType } from 'types';
 
 const Inventario = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [material, setMaterial] = useState<string>('');
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
 
-  const [materialSeleccionado, setMaterialSeleccionado] = useState(null);
+  const { data: materials } = useQuery<{
+    materialsByUser: Material[];
+  }>(GET_MATERIALS_BY_USER, {
+    fetchPolicy: 'cache-first',
+  });
 
-  const materialesPrueba = [
-    { id: 1, nombre: 'Material 1' },
-    { id: 2, nombre: 'Material 2' },
-    { id: 3, nombre: 'Material 3' },
-  ];
+  const {
+    data: movements,
+    loading,
+    error,
+    refetch,
+  } = useQuery<{
+    movementsByMaterial: MovementWithMovementType[];
+  }>(GET_MOVEMENTS_BY_MATERIAL, {
+    fetchPolicy: 'cache-first',
+    variables: {
+      materialId: material,
+    },
+  });
 
-  const [materiales, setMateriales] = useState(materialesPrueba);
+  const handleSelectMaterial = ({
+    target: { value },
+  }: React.ChangeEvent<HTMLSelectElement>) => {
+    setMaterial(value);
+    if (value === '') return;
+    refetch();
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    refetch();
+  };
 
   return (
     <PrivateRoute>
@@ -33,11 +62,19 @@ const Inventario = () => {
         </Head>
         <>
           <div className='text-center font-poppins text-5xl'>Inventarios</div>
-          <div className='flex w-full justify-between pt-[50px]'>
-            <select className='h-16 w-64 rounded-lg border-2 border-black bg-green-200 font-poppins text-xl hover:bg-green-300 focus:border-green-500 focus:outline-none'>
-              <option>Selecciona un material</option>
-              {materiales.map((material) => (
-                <option key={material.id}>{material.nombre}</option>
+          <div className='flex w-full justify-center gap-4 pt-[50px]'>
+            <select
+              value={material}
+              onChange={handleSelectMaterial}
+              className='h-16 w-64 rounded-lg border-2 border-black bg-green-200 font-poppins text-xl hover:bg-green-300 focus:border-green-500 focus:outline-none'
+            >
+              <option value='' disabled>
+                Selecciona un material
+              </option>
+              {materials?.materialsByUser?.map((material) => (
+                <option key={material.id} value={material.id}>
+                  {material.name}
+                </option>
               ))}
             </select>
             <button
@@ -47,12 +84,15 @@ const Inventario = () => {
               Agregar movimiento
             </button>
           </div>
-          <TablaInventario></TablaInventario>
+          {material && (
+            <TablaInventario
+              data={movements?.movementsByMaterial}
+              loading={loading}
+              error={error}
+            />
+          )}
         </>
-        <ModalMovimiento
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-        />
+        <ModalMovimiento isOpen={isModalOpen} onClose={handleCloseModal} />
       </Layout>
     </PrivateRoute>
   );

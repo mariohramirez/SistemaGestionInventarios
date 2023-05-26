@@ -1,4 +1,10 @@
-import { PrismaClient, Role, User } from '@prisma/client';
+import {
+  Movement,
+  MovementType,
+  PrismaClient,
+  Role,
+  User,
+} from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Session } from 'next-auth/core/types';
 
@@ -21,4 +27,8 @@ export interface Resolver {
 
 export interface UserWithRole extends User {
   role: Role;
+}
+
+export interface MovementWithMovementType extends Movement {
+  movementType: MovementType;
 }
