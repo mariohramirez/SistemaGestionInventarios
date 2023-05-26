@@ -49,10 +49,13 @@ const ModalMovimiento = ({ onClose, isOpen }: ModalProps) => {
 
   return isOpen ? (
     <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
-      <div className='rounded-lg bg-white p-6'>
+      
+      <div className='rounded-lg bg-white p-6 w-full max-w-xl'>
+        
         <h2 className='mb-4 text-lg font-medium'>
           Agregar un nuevo movimiento
         </h2>
+
         <form onSubmit={handleFormSubmit}>
           <div className='mb-4'>
             <select
@@ -131,7 +134,9 @@ const ModalMovimiento = ({ onClose, isOpen }: ModalProps) => {
             </button>
           </div>
         </form>
+        
       </div>
+
     </div>
   ) : null;
 };

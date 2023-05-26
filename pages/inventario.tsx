@@ -61,7 +61,7 @@ const Inventario = () => {
           <link rel='icon' href='/favicon.ico' />
         </Head>
         <>
-          <div className='text-center font-poppins text-5xl'>Inventarios</div>
+          <div className='text-center font-poppins text-5xl pt-10'>Inventarios</div>
           <div className='flex w-full justify-center gap-4 pt-[50px]'>
             <select
               value={material}
@@ -77,20 +77,25 @@ const Inventario = () => {
                 </option>
               ))}
             </select>
+
             <button
               onClick={handleOpenModal}
               className='h-[65px] w-[226px] rounded-xl bg-[#004737] font-poppins text-xl text-white shadow-md transition duration-500 ease-in-out hover:bg-[#007f5f]'
             >
               Agregar movimiento
             </button>
+
           </div>
-          {material && (
-            <TablaInventario
-              data={movements?.movementsByMaterial}
-              loading={loading}
-              error={error}
-            />
-          )}
+          <div className='flex overflow-y-auto px-4'>
+            {material && (
+              <TablaInventario
+                data={movements?.movementsByMaterial}
+                loading={loading}
+                error={error}
+              />
+            )}
+          </div>
+
         </>
         <ModalMovimiento isOpen={isModalOpen} onClose={handleCloseModal} />
       </Layout>

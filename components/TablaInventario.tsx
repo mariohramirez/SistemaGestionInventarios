@@ -1,3 +1,4 @@
+import React from "react";
 import { MovementWithMovementType } from 'types';
 
 interface Props {
@@ -6,12 +7,12 @@ interface Props {
   error: any;
 }
 
-const TablaInventario = ({ data, loading, error }: Props) => {
+export const TablaInventario = ({ data, loading, error }: Props) => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
 
   return (
-    <div className='pb-20 pt-[42px]'>
+    <div className='pb-20'>
       <table className='table-auto border-2 border-black'>
         <thead>
           <tr className='h-[90px]'>
@@ -21,9 +22,9 @@ const TablaInventario = ({ data, loading, error }: Props) => {
             <th>Salida</th>
           </tr>
         </thead>
-        <tbody className='bg-[#FFFFFF]'>
+        <tbody className='bg-[#FFFFFF] overflow-y-scroll'>
           {data?.map((movement) => (
-            <tr key={movement.id} className='h-[90px] border-2 border-black'>
+            <tr key={movement.id} className='h-12 border-2 border-black'>
               <td>{movement.id}</td>
               <td>{'' + movement.createdAt}</td>
               <td>
@@ -39,5 +40,3 @@ const TablaInventario = ({ data, loading, error }: Props) => {
     </div>
   );
 };
-
-export { TablaInventario };

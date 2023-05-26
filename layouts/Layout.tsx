@@ -7,8 +7,10 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => (
   <div className='flex h-full w-full bg-[#EAF3D8]'>
     <Sidebar />
-    <div className='mt-10 flex h-full w-full justify-center'>
-      <div className='flex w-full flex-col items-center'>{children}</div>
+    <div className='flex h-screen w-full justify-center'>
+      <div className='flex flex-col items-center'>
+        {children}
+      </div>
     </div>
   </div>
 );
