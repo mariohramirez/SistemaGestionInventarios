@@ -16,6 +16,22 @@ const resolvers: Resolver = {
     createdAt: (parent, args, context) =>
       parent.createdAt.toLocaleDateString(DATE_LOCALE, DATE_OPTIONS),
   },
+  Movement: {
+    createdAt: (parent, args, context) =>
+      parent.createdAt.toLocaleDateString(DATE_LOCALE, DATE_OPTIONS),
+    movementType: async (parent, args, { db }) =>
+      await db.movementType.findUnique({
+        where: {
+          id: parent.movementTypeId,
+        },
+      }),
+    material: async (parent, args, { db }) =>
+      await db.material.findUnique({
+        where: {
+          id: parent.materialId,
+        },
+      }),
+  },
   Query: {
     users: async (parent, args, { db, session }) => {
       if (!session) return null;
@@ -57,6 +73,34 @@ const resolvers: Resolver = {
       });
     },
     roles: async (parent, args, { db }) => await db.role.findMany(),
+    movementsByUser: async (parent, args, { db, session }) => {
+      if (!session) return null;
+      const email = session?.user?.email ?? '';
+
+      return await db.movement.findMany({
+        where: {
+          createdBy: {
+            email,
+          },
+        },
+        orderBy: [{ createdAt: 'desc' }],
+      });
+    },
+    movementsByMaterial: async (parent, { materialId }, { db, session }) => {
+      if (!session) return null;
+
+      const email = session?.user?.email ?? '';
+
+      return await db.movement.findMany({
+        where: {
+          materialId,
+          createdBy: {
+            email,
+          },
+        },
+        orderBy: [{ createdAt: 'desc' }],
+      });
+    },
   },
   Mutation: {
     createMaterial: async (parent, { name, price }, { db, session }) => {
@@ -78,6 +122,46 @@ const resolvers: Resolver = {
         data: {
           name,
           price,
+          createdBy: {
+            connect: {
+              email,
+            },
+          },
+        },
+      });
+    },
+    createMovement: async (
+      parent,
+      { materialId, quantity, type },
+      { db, session }
+    ) => {
+      if (!session) return null;
+      const email = session?.user?.email ?? '';
+
+      const user = await db.user.findUnique({
+        where: {
+          email,
+        },
+        include: { role: true },
+      });
+
+      const role = user?.role?.name;
+
+      if (!role || role !== 'ADMIN') return null;
+
+      return await db.movement.create({
+        data: {
+          material: {
+            connect: {
+              id: materialId,
+            },
+          },
+          quantity,
+          movementType: {
+            connect: {
+              name: type,
+            },
+          },
           createdBy: {
             connect: {
               email,

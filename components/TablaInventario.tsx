@@ -1,38 +1,42 @@
 import React from "react";
+import { MovementWithMovementType } from 'types';
 
-const DUMMY_DATA = new Array(25).fill(null).map(() => {
-  return {
-    id: "clh0zouj500003o7es6axmbci",
-    date: "DD-MM-YY",
-    in: 50,
-    out: 50
-  }
-})
-
-export function TablaInventario(props: any) {
-
-  return <div className='pb-20'>
-    <table className='table-auto border-2 border-black'>
-      <thead>
-        <tr className='h-[90px] '>
-          <th>Identificador</th>
-          <th>Fecha</th>
-          <th>Entrada</th>
-          <th>Salida</th>
-        </tr>
-      </thead>
-      <tbody className='bg-[#FFFFFF] overflow-y-scroll'>
-        {DUMMY_DATA.map((item, index) => {
-          return <tr key={`${item.id} ${index}` } className='h-10 border-2 border-black'>
-            <td>{item.id}</td>
-            <td>{item.date}</td>
-            <td>{item.in}</td>
-            <td>{item.out}</td>
-          </tr>
-        })}
-      </tbody>
-    </table>
-  </div>
-
-
+interface Props {
+  data?: MovementWithMovementType[];
+  loading: boolean;
+  error: any;
 }
+
+export const TablaInventario = ({ data, loading, error }: Props) => {
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error</p>;
+
+  return (
+    <div className='pb-20'>
+      <table className='table-auto border-2 border-black'>
+        <thead>
+          <tr className='h-[90px]'>
+            <th>Identificador</th>
+            <th>Fecha</th>
+            <th>Entrada</th>
+            <th>Salida</th>
+          </tr>
+        </thead>
+        <tbody className='bg-[#FFFFFF] overflow-y-scroll'>
+          {data?.map((movement) => (
+            <tr key={movement.id} className='h-12 border-2 border-black'>
+              <td>{movement.id}</td>
+              <td>{'' + movement.createdAt}</td>
+              <td>
+                {movement.movementType.name === 'IN' ? movement.quantity : ''}
+              </td>
+              <td>
+                {movement.movementType.name === 'OUT' ? movement.quantity : ''}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};

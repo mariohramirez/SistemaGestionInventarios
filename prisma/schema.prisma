@@ -72,7 +72,7 @@ model Role {
 
 model MovementType {
   id        String             @id @unique @default(cuid())
-  name      Enum_MovementType?
+  name      Enum_MovementType? @unique
   movements Movement[]
   createdAt DateTime?          @default(now())
   updatedAt DateTime?          @updatedAt
