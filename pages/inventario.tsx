@@ -4,6 +4,7 @@ import { TablaInventario } from '@components/TablaInventario';
 import { PrivateRoute } from '@components/PrivateRoute';
 import { Layout } from '@layouts/Layout';
 import Head from 'next/head';
+import { BreakPointComponent } from '@components/BreakPoints';
 
 const Inventario = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,27 +33,42 @@ const Inventario = () => {
           <link rel='icon' href='/favicon.ico' />
         </Head>
         <>
-          <div className='text-center font-poppins text-5xl'>Inventarios</div>
-          <div className='flex w-full justify-between pt-[50px]'>
+
+          <div className='text-center font-poppins text-5xl mt-10'>
+            Inventarios
+          </div>
+
+          {/* <BreakPointComponent></BreakPointComponent> */}
+
+          <div className='flex w-full justify-between pt-[50px] px-10 pb-10'>
+            
             <select className='h-16 w-64 rounded-lg border-2 border-black bg-green-200 font-poppins text-xl hover:bg-green-300 focus:border-green-500 focus:outline-none'>
               <option>Selecciona un material</option>
               {materiales.map((material) => (
                 <option key={material.id}>{material.nombre}</option>
               ))}
             </select>
+
             <button
               onClick={handleOpenModal}
               className='h-[65px] w-[226px] rounded-xl bg-[#004737] font-poppins text-xl text-white shadow-md transition duration-500 ease-in-out hover:bg-[#007f5f]'
             >
               Agregar movimiento
             </button>
+
           </div>
-          <TablaInventario></TablaInventario>
+
+          <div className='flex overflow-y-auto px-4'>
+            <TablaInventario></TablaInventario>
+          </div>
+
         </>
+
         <ModalMovimiento
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
         />
+
       </Layout>
     </PrivateRoute>
   );
