@@ -3,35 +3,29 @@ import user from '@public/png/user.png';
 import { PrivateComponent } from '@components/PrivateComponent';
 import { SidebarLink } from '@components/SidebarLink';
 import { signOut } from 'next-auth/react';
-import picture from '@public/png/picture.png';
 import logo from '@public/png/logo.png';
 import inventario from '@public/png/inventario.png';
 import inventario2 from '@public/png/inventario2.png';
 import cart from '@public/png/cart.png';
 import { useSession } from 'next-auth/react';
 
-
-
-export function Sidebar(props: any) {
-
+export const Sidebar = () => {
   const { data: session } = useSession();
 
-
   const handleLogout = () => {
-    signOut({ callbackUrl: 'http://localhost:3000/login' });
+    signOut({ callbackUrl: process.env.AUTH0_SIGNOUT_CALLBACK_URL });
   };
 
   return (
     <div className='sticky bottom-0 left-0 top-0 h-screen w-[292px] bg-[#004737]'>
       <div className='flex h-full w-[292px] flex-col items-center justify-between'>
-
         {/* AVATAR SECTION */}
         <div className='grid justify-items-center'>
-          <div className='rounded-full overflow-hidden w-[200px] h-[200px]'>
+          <div className='h-[200px] w-[200px] overflow-hidden rounded-full'>
             <img
-              src={session?.user?.image || '/path/to/default/image.png'}
+              src={session?.user?.image || '/png/picture.png'}
               alt='Picture'
-              className='object-cover w-full h-full'
+              className='h-full w-full object-cover'
             />
           </div>
           <div className='pt-[18px] font-poppins text-xl text-white'>
@@ -39,12 +33,9 @@ export function Sidebar(props: any) {
           </div>
         </div>
 
-
-
         <div className='flex h-full flex-col justify-between py-5'>
-
           {/* ACTION BUTTONS */}
-          <div className='flex flex-col w-full gap-4 px-3'>
+          <div className='flex w-full flex-col gap-4 px-3'>
             <SidebarLink
               title='Inventarios'
               href='/inventario'
@@ -93,7 +84,6 @@ export function Sidebar(props: any) {
             </button>
             <Image src={logo} alt='Logo' className='pl-[47px] pr-[47px]' />
           </div>
-
         </div>
       </div>
     </div>
