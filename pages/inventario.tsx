@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ModalMovimiento } from '@components/ModalMovimiento';
 import { TablaInventario } from '@components/TablaInventario';
 import { PrivateRoute } from '@components/PrivateRoute';
@@ -9,13 +9,18 @@ import { GET_MATERIALS_BY_USER } from '@graphql/client/materials';
 import { useQuery } from '@apollo/client';
 import { GET_MOVEMENTS_BY_MATERIAL } from '@graphql/client/movements';
 import { MovementWithMovementType } from 'types';
-
 import { LayoutContext } from 'contexts/LayoutContext';
 import { MuiSelect } from '@components/material/MuiSelect';
 
+interface FormData {
+  materialId: string;
+}
+
 const Inventario = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [material, setMaterial] = useState<string>('');
+  const [formData, setFormData] = useState<FormData>({
+    materialId: '',
+  });
   const { showLeftMenu } = useContext(LayoutContext);
 
   const handleOpenModal = () => {
@@ -38,22 +43,24 @@ const Inventario = () => {
   }>(GET_MOVEMENTS_BY_MATERIAL, {
     fetchPolicy: 'cache-first',
     variables: {
-      materialId: material,
+      materialId: formData.materialId,
     },
   });
 
   const handleSelectMaterial = ({
     target: { value },
   }: React.ChangeEvent<HTMLSelectElement>) => {
-    setMaterial(value);
-    if (value === '') return;
-    refetch();
+    setFormData({ materialId: value });
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
     refetch();
   };
+
+  useEffect(() => {
+    refetch();
+  }, [formData.materialId, refetch]);
 
   return (
     <PrivateRoute>
@@ -75,9 +82,9 @@ const Inventario = () => {
             </div>
 
             {/* ACTION BUTTONS */}
-            <div className='flex w-full flex-wrap justify-center gap-4'>
+            <div className='flex w-full flex-wrap justify-center gap-4 pt-[77px]'>
               <select
-                value={material}
+                value={formData.materialId}
                 onChange={handleSelectMaterial}
                 className='h-16 w-64 rounded-lg border-2 border-black bg-green-200 font-poppins text-xl hover:bg-green-300 focus:border-green-500 focus:outline-none'
               >
@@ -116,12 +123,26 @@ const Inventario = () => {
 
             {/* TABLE */}
             <div className='flex overflow-y-auto px-4'>
-              {material && (
+              {formData.materialId && (
                 <TablaInventario
                   data={movements?.movementsByMaterial}
                   loading={loading}
                   error={error}
                 />
+              )}
+            </div>
+            <div className='flex w-full justify-end'>
+              {formData.materialId && (
+                <span>
+                  Saldo:{' '}
+                  {movements?.movementsByMaterial?.reduce(
+                    (acc, curr) =>
+                      curr.movementType.name === 'IN'
+                        ? acc + curr.quantity
+                        : acc - curr.quantity,
+                    0
+                  )}
+                </span>
               )}
             </div>
           </div>

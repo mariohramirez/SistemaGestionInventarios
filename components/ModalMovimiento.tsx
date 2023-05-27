@@ -11,7 +11,7 @@ type ModalProps = {
 
 interface FormData {
   materialId: string;
-  quantity: number;
+  quantity: string;
   movementType: string;
 }
 
@@ -24,7 +24,7 @@ const ModalMovimiento = ({ onClose, isOpen }: ModalProps) => {
 
   const [formData, setFormData] = useState<FormData>({
     materialId: '',
-    quantity: 0,
+    quantity: '0',
     movementType: 'IN',
   });
 
@@ -36,11 +36,11 @@ const ModalMovimiento = ({ onClose, isOpen }: ModalProps) => {
       await createMovement({
         variables: {
           materialId: formData.materialId,
-          quantity: formData.quantity,
+          quantity: parseInt(formData.quantity),
           type: formData.movementType,
         },
       });
-      setFormData({ materialId: '', quantity: 0, movementType: 'IN' });
+      setFormData({ materialId: '', quantity: '0', movementType: 'IN' });
     } catch (e) {
       console.error(e);
     }
@@ -49,9 +49,7 @@ const ModalMovimiento = ({ onClose, isOpen }: ModalProps) => {
 
   return isOpen ? (
     <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 px-3'>
-      
-      <div className='rounded-lg bg-white p-6 w-full max-w-xl'>
-        
+      <div className='w-full max-w-xl rounded-lg bg-white p-6'>
         <h2 className='mb-4 text-lg font-medium'>
           Agregar un nuevo movimiento
         </h2>
@@ -84,7 +82,7 @@ const ModalMovimiento = ({ onClose, isOpen }: ModalProps) => {
               Tipo de movimiento
             </label>
             <select
-              className='w-full rounded-lg border-gray-300 p-2'
+              className='w-full rounded-lg border border-gray-300 p-2'
               value={formData.movementType}
               onChange={(e) =>
                 setFormData((prev) => ({
@@ -107,13 +105,13 @@ const ModalMovimiento = ({ onClose, isOpen }: ModalProps) => {
             </label>
             <input
               type='number'
-              className='w-full rounded-lg border-gray-300 p-2'
+              className='w-full rounded-lg border border-gray-300 p-2'
               value={formData.quantity}
               min={1}
               onChange={(e) =>
                 setFormData((prev) => ({
                   ...prev,
-                  quantity: e.target.value ? parseInt(e.target.value) : 0,
+                  quantity: e.target.value ? e.target.value : '0',
                 }))
               }
             />
@@ -134,9 +132,7 @@ const ModalMovimiento = ({ onClose, isOpen }: ModalProps) => {
             </button>
           </div>
         </form>
-        
       </div>
-
     </div>
   ) : null;
 };

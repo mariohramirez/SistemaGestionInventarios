@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { MovementWithMovementType } from 'types';
 
 interface Props {
@@ -12,7 +12,7 @@ export const TablaInventario = ({ data, loading, error }: Props) => {
   if (error) return <p>Error</p>;
 
   return (
-    <div className='pb-20'>
+    <div className='pb-20 pt-[42px]'>
       <table className='table-auto border-2 border-black'>
         <thead>
           <tr className='h-[90px]'>
@@ -22,7 +22,7 @@ export const TablaInventario = ({ data, loading, error }: Props) => {
             <th>Salida</th>
           </tr>
         </thead>
-        <tbody className='bg-[#FFFFFF] overflow-y-scroll'>
+        <tbody className='overflow-y-scroll bg-[#FFFFFF]'>
           {data?.map((movement) => (
             <tr key={movement.id} className='h-12 border-2 border-black'>
               <td>{movement.id}</td>
