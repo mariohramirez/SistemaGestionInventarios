@@ -1,4 +1,4 @@
-#Sistema de gestión de inventarios
+# Sistema de gestión de inventarios
 
 Aplicación que sirve para realizar la gestión de inventarios de una empresa.
 
@@ -12,9 +12,9 @@ El diagrama ER para la aplicación:
 
 ![Diagrama ER (1)](https://github.com/mariohramirez/SistemaGestionInventarios/assets/57969717/de94c070-2777-4c63-8a28-982382d53a3d)
 
-###Objetivo general: 
+### Objetivo general: 
 Interiorizar los conceptos principales del desarrollo de una app web full-stack.
-###Objetivos específicos:
+### Objetivos específicos:
 1. Interiorizar el uso de TypeScript y del chequeo estático de código.
 2. Interiorizar el desarrollo del back-end de una aplicación.
 3. Interiorizar la integración entre el desarrollo front-end y back-end.
