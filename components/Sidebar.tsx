@@ -8,9 +8,14 @@ import logo from '@public/png/logo.png';
 import inventario from '@public/png/inventario.png';
 import inventario2 from '@public/png/inventario2.png';
 import cart from '@public/png/cart.png';
+import { useSession } from 'next-auth/react';
+
 
 
 export function Sidebar(props: any) {
+
+  const { data: session } = useSession();
+
 
   const handleLogout = () => {
     signOut({ callbackUrl: 'http://localhost:3000/login' });
@@ -22,11 +27,19 @@ export function Sidebar(props: any) {
 
         {/* AVATAR SECTION */}
         <div className='grid justify-items-center'>
-          <Image src={picture} alt='Picture' className='pt-[49px]' />
+          <div className='rounded-full overflow-hidden w-[200px] h-[200px]'>
+            <img
+              src={session?.user?.image || '/path/to/default/image.png'}
+              alt='Picture'
+              className='object-cover w-full h-full'
+            />
+          </div>
           <div className='pt-[18px] font-poppins text-xl text-white'>
-            Ava Williams
+            {session?.user?.name || 'Nombre de usuario'}
           </div>
         </div>
+
+
 
         <div className='flex h-full flex-col justify-between py-5'>
 
