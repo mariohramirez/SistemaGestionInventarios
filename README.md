@@ -1,4 +1,28 @@
+#Sistema de gestión de inventarios
+
+Aplicación que sirve para realizar la gestión de inventarios de una empresa.
+
+Este es el último proyecto de la materia de Ingeniería Web de la Universidad de Antioquia.
+
+El Mockup se encuentra en el siguiente enlace:
+
+[![Button Figma]][Figma Link] 
+
+El diagrama ER para la aplicación:
+
 ![Diagrama ER (1)](https://github.com/mariohramirez/SistemaGestionInventarios/assets/57969717/de94c070-2777-4c63-8a28-982382d53a3d)
+
+###Objetivo general: 
+Interiorizar los conceptos principales del desarrollo de una app web full-stack.
+###Objetivos específicos:
+1. Interiorizar el uso de TypeScript y del chequeo estático de código.
+2. Interiorizar el desarrollo del back-end de una aplicación.
+3. Interiorizar la integración entre el desarrollo front-end y back-end.
+4. Interiorizar el desarrollo del front-end de una aplicación.
+5. Interiorizar las buenas prácticas de autenticación.
+
+[Figma Link]: https://www.figma.com/file/okSfyPkxGH6QSgBo53u5z8/Sistema-de-Gesti%C3%B3n-de-Inventarios?type=design&node-id=0%3A1&t=uXjOiXhnlBlxv4CC-1
+[Button Figma]: https://img.shields.io/badge/Mockup-Figma-blueviolet?style=for-the-badge
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
