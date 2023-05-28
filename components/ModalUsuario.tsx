@@ -4,10 +4,10 @@ import { Enum_RoleName } from '@prisma/client';
 import { useState } from 'react';
 import { UserWithRole } from 'types';
 import { toast } from 'react-toastify';
+import { useUserModalContext } from 'contexts/ModalUsuarioContext';
 
 type ModalProps = {
   onClose: () => void;
-  isOpen: boolean;
 };
 
 interface FormData {
@@ -15,7 +15,8 @@ interface FormData {
   newRole: string;
 }
 
-const ModalUsuario = ({ onClose, isOpen }: ModalProps) => {
+const ModalUsuario = ({ onClose }: ModalProps) => {
+  const { openUserModal } = useUserModalContext();
   const [formData, setFormData] = useState<FormData>({
     userId: '',
     newRole: '',
@@ -47,7 +48,7 @@ const ModalUsuario = ({ onClose, isOpen }: ModalProps) => {
     onClose();
   };
 
-  return isOpen ? (
+  return openUserModal ? (
     <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
       <div className='rounded-lg bg-white p-6'>
         <h2 className='mb-4 text-lg font-medium'>Editar un usuario</h2>
