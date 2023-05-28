@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { TablaUsuario } from '@components/TablaUsuario';
 import { ModalUsuario } from '@components/ModalUsuario';
 import { PrivateRoute } from '@components/PrivateRoute';
@@ -7,9 +6,10 @@ import { UserWithRole } from 'types';
 import { GET_USERS } from '@graphql/client/users';
 import { useQuery } from '@apollo/client';
 import Head from 'next/head';
+import { useUserModalContext } from 'contexts/ModalUsuarioContext';
 
 const Usuario = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { setOpenUserModal } = useUserModalContext();
 
   const { data, loading, error, refetch } = useQuery<{
     users: UserWithRole[];
@@ -18,11 +18,11 @@ const Usuario = () => {
   });
 
   const handleOpenModal = () => {
-    setIsModalOpen(true);
+    setOpenUserModal(true);
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+    setOpenUserModal(false);
     refetch();
   };
 
@@ -49,7 +49,7 @@ const Usuario = () => {
           </div>
           <TablaUsuario data={data?.users} loading={loading} error={error} />
         </>
-        <ModalUsuario isOpen={isModalOpen} onClose={handleCloseModal} />
+        <ModalUsuario onClose={handleCloseModal} />
       </Layout>
     </PrivateRoute>
   );

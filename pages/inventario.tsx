@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ModalMovimiento } from '@components/ModalMovimiento';
 import { TablaInventario } from '@components/TablaInventario';
 import { PrivateRoute } from '@components/PrivateRoute';
@@ -9,22 +9,20 @@ import { GET_MATERIALS_BY_USER } from '@graphql/client/materials';
 import { useQuery } from '@apollo/client';
 import { GET_MOVEMENTS_BY_MATERIAL } from '@graphql/client/movements';
 import { MovementWithMovementType } from 'types';
-import { LayoutContext } from 'contexts/LayoutContext';
-import { MuiSelect } from '@components/material/MuiSelect';
+import { useMovementModalContext } from 'contexts/ModalMovimientoContext';
 
 interface FormData {
   materialId: string;
 }
 
 const Inventario = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { setOpenMovementModal } = useMovementModalContext();
   const [formData, setFormData] = useState<FormData>({
     materialId: '',
   });
-  const { showLeftMenu } = useContext(LayoutContext);
 
   const handleOpenModal = () => {
-    setIsModalOpen(true);
+    setOpenMovementModal(true);
   };
 
   const { data: materials } = useQuery<{
@@ -54,7 +52,7 @@ const Inventario = () => {
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+    setOpenMovementModal(false);
     refetch();
   };
 
@@ -98,21 +96,6 @@ const Inventario = () => {
                 ))}
               </select>
 
-              {/* <MuiSelect
-                placeholder='Selecciona un material'
-                // selectOptions={[materials?.materialsByUser]}
-                selectOptions={
-                  [
-                    { name: 'Material 1', id: '1' },
-                    { name: 'Material KL 2', id: '2' },
-                  ] as Material[]
-                }
-                displayFn={(i: Material) => i.name}
-                onValueChange={(e) => {
-                  console.log('Option changed --> ', e);
-                }}
-              /> */}
-
               <button
                 onClick={handleOpenModal}
                 className='h-[65px] w-[226px] rounded-xl bg-[#004737] font-poppins text-xl text-white shadow-md transition duration-500 ease-in-out hover:bg-[#007f5f]'
@@ -146,10 +129,9 @@ const Inventario = () => {
               )}
             </div>
           </div>
-
-          <ModalMovimiento isOpen={isModalOpen} onClose={handleCloseModal} />
         </Layout>
       </>
+      <ModalMovimiento onClose={handleCloseModal} />
     </PrivateRoute>
   );
 };

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { TablaMaterial } from '@components/TablaMaterial';
 import { ModalMaterial } from '@components/ModalMaterial';
 import { PrivateRoute } from '@components/PrivateRoute';
@@ -7,9 +6,10 @@ import Head from 'next/head';
 import { useQuery } from '@apollo/client';
 import { Material } from '@prisma/client';
 import { GET_MATERIALS_BY_USER } from '@graphql/client/materials';
+import { useMaterialModalContext } from 'contexts/ModalMaterialContext';
 
 const Material = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { setOpenMaterialModal } = useMaterialModalContext();
 
   const { data, loading, error, refetch } = useQuery<{
     materialsByUser: Material[];
@@ -18,11 +18,11 @@ const Material = () => {
   });
 
   const handleOpenModal = () => {
-    setIsModalOpen(true);
+    setOpenMaterialModal(true);
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+    setOpenMaterialModal(false);
     refetch();
   };
 
@@ -59,9 +59,8 @@ const Material = () => {
             error={error}
           />
         </div>
-
-        <ModalMaterial isOpen={isModalOpen} onClose={handleCloseModal} />
       </Layout>
+      <ModalMaterial onClose={handleCloseModal} />
     </PrivateRoute>
   );
 };

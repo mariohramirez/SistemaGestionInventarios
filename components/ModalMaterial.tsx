@@ -1,11 +1,11 @@
 import { useMutation } from '@apollo/client';
 import { CREATE_MATERIAL } from '@graphql/client/materials';
+import { useMaterialModalContext } from 'contexts/ModalMaterialContext';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 type ModalProps = {
   onClose: () => void;
-  isOpen: boolean;
 };
 
 interface FormData {
@@ -13,7 +13,9 @@ interface FormData {
   price: number;
 }
 
-const ModalMaterial = ({ onClose, isOpen }: ModalProps) => {
+const ModalMaterial = ({ onClose }: ModalProps) => {
+  const { openMaterialModal } = useMaterialModalContext();
+
   const [formData, setFormData] = useState<FormData>({
     name: '',
     price: 0,
@@ -37,7 +39,7 @@ const ModalMaterial = ({ onClose, isOpen }: ModalProps) => {
     onClose();
   };
 
-  return isOpen ? (
+  return openMaterialModal ? (
     <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
       <div className='rounded-lg bg-white p-6'>
         <h2 className='mb-4 text-lg font-medium'>Agregar un nuevo material</h2>

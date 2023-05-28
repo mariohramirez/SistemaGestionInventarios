@@ -4,10 +4,10 @@ import { GET_MATERIALS_BY_USER } from '@graphql/client/materials';
 import { CREATE_MOVEMENT } from '@graphql/client/movements';
 import { Enum_MovementType, Material } from '@prisma/client';
 import { toast } from 'react-toastify';
+import { useMovementModalContext } from 'contexts/ModalMovimientoContext';
 
 type ModalProps = {
   onClose: () => void;
-  isOpen: boolean;
 };
 
 interface FormData {
@@ -16,7 +16,8 @@ interface FormData {
   movementType: string;
 }
 
-const ModalMovimiento = ({ onClose, isOpen }: ModalProps) => {
+const ModalMovimiento = ({ onClose }: ModalProps) => {
+  const { openMovementModal } = useMovementModalContext();
   const { data } = useQuery<{
     materialsByUser: Material[];
   }>(GET_MATERIALS_BY_USER, {
@@ -49,7 +50,7 @@ const ModalMovimiento = ({ onClose, isOpen }: ModalProps) => {
     onClose();
   };
 
-  return isOpen ? (
+  return openMovementModal ? (
     <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 px-3'>
       <div className='w-full max-w-xl rounded-lg bg-white p-6'>
         <h2 className='mb-4 text-lg font-medium'>
