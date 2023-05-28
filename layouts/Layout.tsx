@@ -1,7 +1,6 @@
 import { Sidebar } from '@components/Sidebar';
 import Drawer from '@mui/material/Drawer';
-import { LayoutContext } from 'contexts/LayoutContext';
-import React, { useContext } from 'react';
+import { useSidebarContext } from 'contexts/LayoutContext';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
@@ -10,7 +9,7 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
-  const { setShowLeftMenu, showLeftMenu } = useContext(LayoutContext);
+  const { openSidebar, setOpenSidebar } = useSidebarContext();
 
   return (
     <>
@@ -18,8 +17,8 @@ const Layout = ({ children }: LayoutProps) => {
         <Drawer
           className='block md:hidden'
           anchor={'left'}
-          open={showLeftMenu}
-          onClose={() => setShowLeftMenu(false)}
+          open={openSidebar}
+          onClose={() => setOpenSidebar(false)}
         >
           <Sidebar />
         </Drawer>
@@ -34,13 +33,13 @@ const Layout = ({ children }: LayoutProps) => {
             <IconButton
               color='primary'
               aria-label='add to shopping cart'
-              onClick={() => setShowLeftMenu(true)}
+              onClick={() => setOpenSidebar(true)}
             >
               <MenuIcon />
             </IconButton>
           </div>
 
-          <div className='w-full max-w-3/4 h-full flex flex-col items-center overflow-y-auto pb-10'>
+          <div className='max-w-3/4 flex h-full w-full flex-col items-center overflow-y-auto pb-10'>
             {children}
           </div>
         </div>
