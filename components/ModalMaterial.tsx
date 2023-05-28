@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { CREATE_MATERIAL } from '@graphql/client/materials';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 type ModalProps = {
   onClose: () => void;
@@ -23,13 +24,15 @@ const ModalMaterial = ({ onClose, isOpen }: ModalProps) => {
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const { data } = await createMaterial({
+      await createMaterial({
         variables: {
           ...formData,
         },
       });
+      setFormData({ name: '', price: 0 });
+      toast.success('Material creado correctamente');
     } catch (e) {
-      console.error(e);
+      toast.error('Error al crear el material');
     }
     onClose();
   };

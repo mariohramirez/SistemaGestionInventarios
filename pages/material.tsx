@@ -37,7 +37,7 @@ const Material = () => {
         </Head>
 
         {/* TITLE */}
-        <div className='pb-3 text-center font-poppins text-3xl md:text-5xl'>
+        <div className='pb-3 pt-3 text-center font-poppins text-3xl md:text-5xl'>
           Materiales
         </div>
 
