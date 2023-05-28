@@ -36,7 +36,7 @@ const Usuario = () => {
           <link rel='icon' href='/favicon.ico' />
         </Head>
         <>
-          <div className='w-[460px] text-center font-poppins text-5xl'>
+          <div className='w-[460px] pt-3 text-center font-poppins text-5xl'>
             Usuarios
           </div>
           <div className='flex space-x-[526px] pt-[77px]'>

@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { LayoutContext } from 'contexts/LayoutContext';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '@styles/globals.css';
 import type { AppProps } from 'next/app';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { SessionProvider } from 'next-auth/react';
-import { LayoutContext } from 'contexts/LayoutContext';
 
 const client = new ApolloClient({
   uri: '/api/graphql',
@@ -25,6 +27,7 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
             value={{ showLeftMenu: showMenu, setShowLeftMenu: updateShowMenu }}
           >
             <Component {...pageProps} />
+            <ToastContainer />
           </LayoutContext.Provider>
         </ApolloProvider>
       </SessionProvider>

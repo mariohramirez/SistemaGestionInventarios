@@ -3,6 +3,7 @@ import { GET_USERS, UPDATE_USER_ROLE } from '@graphql/client/users';
 import { Enum_RoleName } from '@prisma/client';
 import { useState } from 'react';
 import { UserWithRole } from 'types';
+import { toast } from 'react-toastify';
 
 type ModalProps = {
   onClose: () => void;
@@ -38,8 +39,9 @@ const ModalUsuario = ({ onClose, isOpen }: ModalProps) => {
         },
       });
       setFormData({ userId: '', newRole: '' });
+      toast.success('Rol de usuario editado correctamente');
     } catch (e) {
-      console.error(e);
+      toast.error('Error al editar el rol de usuario');
     }
 
     onClose();

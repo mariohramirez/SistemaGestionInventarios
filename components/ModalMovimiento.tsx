@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_MATERIALS_BY_USER } from '@graphql/client/materials';
 import { CREATE_MOVEMENT } from '@graphql/client/movements';
 import { Enum_MovementType, Material } from '@prisma/client';
-import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 type ModalProps = {
   onClose: () => void;
@@ -41,8 +42,9 @@ const ModalMovimiento = ({ onClose, isOpen }: ModalProps) => {
         },
       });
       setFormData({ materialId: '', quantity: '0', movementType: 'IN' });
+      toast.success('Movimiento creado correctamente');
     } catch (e) {
-      console.error(e);
+      toast.error('Error al crear el movimiento');
     }
     onClose();
   };

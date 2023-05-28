@@ -20,7 +20,7 @@ export const Sidebar = () => {
     <div className='sticky bottom-0 left-0 top-0 h-screen w-[292px] bg-[#004737]'>
       <div className='flex h-full w-[292px] flex-col items-center justify-between'>
         {/* AVATAR SECTION */}
-        <div className='grid justify-items-center'>
+        <div className='grid justify-items-center pt-3'>
           <div className='h-[200px] w-[200px] overflow-hidden rounded-full'>
             <img
               src={session?.user?.image || '/png/picture.png'}
