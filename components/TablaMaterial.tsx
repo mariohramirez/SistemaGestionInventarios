@@ -11,8 +11,8 @@ const TablaMaterial = ({ data, loading, error }: Props) => {
   if (error) return <p>Error</p>;
 
   return (
-    <div className='pt-[42px]'>
-      <table className=' table-auto border-2 border-black'>
+    <div className='pt-10 w-full'>
+      <table className=' table-auto border-2 border-black w-full'>
         <thead>
           <tr className='h-[90px] '>
             <th>Identificador</th>
