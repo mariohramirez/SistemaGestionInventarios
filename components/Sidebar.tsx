@@ -24,6 +24,7 @@ export const Sidebar = () => {
         {/* AVATAR SECTION */}
         <div className='grid justify-items-center pt-3'>
           <div className='h-[200px] w-[200px] overflow-hidden rounded-full'>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={session?.user?.image || '/png/picture.png'}
               alt='Picture'
