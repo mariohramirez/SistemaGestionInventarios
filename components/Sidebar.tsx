@@ -13,7 +13,9 @@ export const Sidebar = () => {
   const { data: session } = useSession();
 
   const handleLogout = () => {
-    signOut({ callbackUrl: process.env.AUTH0_SIGNOUT_CALLBACK_URL });
+    signOut({
+      callbackUrl: process.env.NEXT_PUBLIC_AUTH0_SIGNOUT_CALLBACK_URL,
+    });
   };
 
   return (
