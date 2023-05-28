@@ -98,7 +98,7 @@ const Inventario = () => {
                 ))}
               </select>
 
-              <MuiSelect
+              {/* <MuiSelect
                 placeholder='Selecciona un material'
                 // selectOptions={[materials?.materialsByUser]}
                 selectOptions={
@@ -111,7 +111,7 @@ const Inventario = () => {
                 onValueChange={(e) => {
                   console.log('Option changed --> ', e);
                 }}
-              />
+              /> */}
 
               <button
                 onClick={handleOpenModal}

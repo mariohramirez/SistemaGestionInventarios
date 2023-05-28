@@ -40,7 +40,7 @@ const Layout = ({ children }: LayoutProps) => {
             </IconButton>
           </div>
 
-          <div className='max-w-3/4 flex flex-col items-center overflow-y-auto pb-10'>
+          <div className='w-full max-w-3/4 h-full flex flex-col items-center overflow-y-auto pb-10'>
             {children}
           </div>
         </div>
